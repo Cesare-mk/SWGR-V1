@@ -1,33 +1,8 @@
-#REPRODUCE
+# REPRODUCE
 # ActionPiece: Contextual Action Tokenization
 
 This repository provides the code for implementing ActionPiece described in our
 **ICML 25 Spotlight** paper "[Contextually Tokenizing Action Sequences forGenerative Recommendation](https://arxiv.org/abs/2502.13581)".
-
-Unlike existing generative recommendation (GR) models that tokenize each action
-independently, we propose ActionPiece, a method that
-**explicitly incorporates context into action sequence tokenization**.
-In ActionPiece, each action is initially represented as a set of item features.
-Using a corpus of action sequences, we construct a vocabulary by merging
-frequently co-occurring feature patterns, both within individual sets and across
-adjacent sets.
-
-<div  align="center">
-<img src="asset/example.png" style="width: 65%"/>
-</div>
-
-## Quick start
-
-```bash
-CUDA_VISIBLE_DEVICES=0 python main.py \
-    --category=Sports_and_Outdoors
-```
-Note that:
-1. The datasets will be automatically downloaded once the `category` argument is specified.
-2. All hyperparameters can be specified via command line arguments. Please refer to:
-    * `genrec/default.yaml`
-    * `genrec/datasets/AmazonReviews2014/config.yaml`
-    * `genrec/models/ActionPiece/config.yaml`
 
 ## Reproduction
 
