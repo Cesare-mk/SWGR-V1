@@ -1,3 +1,4 @@
+#REPRODUCE
 # ActionPiece: Contextual Action Tokenization
 
 This repository provides the code for implementing ActionPiece described in our
@@ -126,7 +127,6 @@ for seed in {2024..2028}; do
         --enable_second_clip=False \
         --ranking_temperature=0.7
 done
-```
 ```
 
 ## Weight Optimization Parameters
