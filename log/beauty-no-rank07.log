@@ -1,0 +1,951 @@
+Fri 10 Oct 2025 11:06:02 INFO  Device: cuda
+Fri 10 Oct 2025 11:06:02 INFO  [DATASET] Amazon Reviews 2014 for category: Beauty
+Fri 10 Oct 2025 11:06:02 INFO  [DATASET] Reviews have been processed...
+Fri 10 Oct 2025 11:06:02 INFO  [DATASET] Metadata has been processed...
+Fri 10 Oct 2025 11:06:02 INFO  [Dataset] AmazonReviews2014
+	Number of users: 22364
+	Number of items: 12102
+	Number of interactions: 198502
+	Average item sequence length: 8.875961366481846
+Fri 10 Oct 2025 11:06:03 INFO  Loading faiss.
+Fri 10 Oct 2025 11:06:03 INFO  Successfully loaded faiss.
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] Loading item features from cache/AmazonReviews2014/Beauty/processed/item.sentence.feat...
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] No existing vocabulary found - will train new ActionPiece...
+Fri 10 Oct 2025 11:06:05 WARNING  [TOKENIZER] No weight file available, using default weights
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] Loading sentence embeddings from cache/AmazonReviews2014/Beauty/processed/sentence-t5-xxl.sent_emb...
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] Sentence embeddings shape: (12101, 128)
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] Computing item weights: mode=SEMANTIC_DIVERSITY, alpha=0.4, clip=(0.1, 10.0), pca_energy=False
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] Start calculating the weights of 12101 items, embedding dimension: 128
+Fri 10 Oct 2025 11:06:05 INFO  [TOKENIZER] Computing item weights based on semantic diversity...
+Fri 10 Oct 2025 11:06:18 INFO  [TOKENIZER] Use SEMANTIC_DIVERSITY mode.
+Fri 10 Oct 2025 11:06:19 INFO  [TOKENIZER] Done. stats -> mean=1.0000 min=0.1267 max=2.2139
+Fri 10 Oct 2025 11:06:19 INFO  [TOKENIZER] Saved item weights(mode=SEMANTIC_DIVERSITY) to cache/AmazonReviews2014/Beauty/processed/sentence-t5-xxl.SEMANTIC_DIVERSITY.sent_emb.weights.json
+Fri 10 Oct 2025 11:06:19 INFO  [TOKENIZER] Building log weights from pre-processed item weights...
+Fri 10 Oct 2025 11:06:19 INFO  ID Mapping: 7806397051 -> 1 (weight: 0.8723)
+Fri 10 Oct 2025 11:06:19 INFO  ID Mapping: 9759091062 -> 2 (weight: 1.2750)
+Fri 10 Oct 2025 11:06:19 INFO  ID Mapping: 9788072216 -> 3 (weight: 0.7234)
+Fri 10 Oct 2025 11:06:19 INFO  ID Mapping: 9790790961 -> 4 (weight: 0.8329)
+Fri 10 Oct 2025 11:06:19 INFO  ID Mapping: 9790794231 -> 5 (weight: 1.2531)
+Fri 10 Oct 2025 11:06:19 INFO  Built reverse ID mapping for 12101 items
+Fri 10 Oct 2025 11:06:20 INFO  [TOKENIZER] Training ActionPiece vocabulary with weighted token pairs...
+Fri 10 Oct 2025 11:06:31 INFO  [TOKENIZER] Building priority queue with optimized weight computation...
+Fri 10 Oct 2025 11:26:40 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 11:27:13 INFO  1. 基础统计 (总计 1143084 pairs):
+Fri 10 Oct 2025 11:27:14 INFO     共现频次: mean=1.1246, std=6.0115, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 11:27:14 INFO     语义权重因子: mean=0.8666, std=0.2241, range=[0.0290, 6.0089]
+Fri 10 Oct 2025 11:27:14 INFO     优先级分数: mean=0.7286, std=1.1039, range=[0.0102, 67.9759]
+Fri 10 Oct 2025 11:27:14 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 11:27:14 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 11:27:14 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 11:27:15 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 11:27:15 INFO     优先级方差: 1.218514
+Fri 10 Oct 2025 11:27:15 INFO     频次方差: 36.138192
+Fri 10 Oct 2025 11:27:15 INFO     权重因子方差: 0.050210
+Fri 10 Oct 2025 11:27:15 INFO     权重因子方差/频次方差比: 0.001389
+Fri 10 Oct 2025 11:27:15 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 11:27:15 INFO     接近无权重 (0.9-1.1倍): 261704/1143084 (22.9%)
+Fri 10 Oct 2025 11:27:15 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 620257/1143084 (54.3%)
+Fri 10 Oct 2025 11:27:15 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 260417/1143084 (22.8%)
+Fri 10 Oct 2025 11:27:15 INFO     显著加权 (>3.0倍 或 <0.3倍): 706/1143084 (0.1%)
+Fri 10 Oct 2025 11:27:34 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 11:27:34 INFO     Top-10: 0.300 (30.0% 相同)
+Fri 10 Oct 2025 11:27:34 INFO     Top-20: 0.500 (50.0% 相同)
+Fri 10 Oct 2025 11:27:34 INFO     Top-30: 0.600 (60.0% 相同)
+Fri 10 Oct 2025 11:27:34 INFO     Top-50: 0.680 (68.0% 相同)
+Fri 10 Oct 2025 11:27:34 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 11:27:34 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 11:27:34 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 11:27:34 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 11:27:34 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 11:27:34 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 11:27:34 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 11:27:34 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 11:27:34 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 11:27:34 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 11:27:34 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 11:27:34 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 11:27:34 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 11:27:34 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 11:27:34 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 11:27:34 INFO     权重标准差: 0.224, 极端权重比例: 1.4%
+Fri 10 Oct 2025 11:27:34 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 11:27:34 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 11:27:34 INFO  ================================================================================
+Fri 10 Oct 2025 11:45:50 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 11:46:31 INFO  1. 基础统计 (总计 1408335 pairs):
+Fri 10 Oct 2025 11:46:32 INFO     共现频次: mean=1.0250, std=5.5240, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 11:46:32 INFO     语义权重因子: mean=0.8670, std=0.2243, range=[0.0290, 6.2144]
+Fri 10 Oct 2025 11:46:32 INFO     优先级分数: mean=0.7092, std=1.0308, range=[0.0102, 67.9759]
+Fri 10 Oct 2025 11:46:32 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 11:46:32 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 11:46:33 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 11:46:33 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 11:46:33 INFO     优先级方差: 1.062473
+Fri 10 Oct 2025 11:46:33 INFO     频次方差: 30.514031
+Fri 10 Oct 2025 11:46:33 INFO     权重因子方差: 0.050290
+Fri 10 Oct 2025 11:46:33 INFO     权重因子方差/频次方差比: 0.001648
+Fri 10 Oct 2025 11:46:33 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 11:46:33 INFO     接近无权重 (0.9-1.1倍): 325662/1408335 (23.1%)
+Fri 10 Oct 2025 11:46:33 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 765679/1408335 (54.4%)
+Fri 10 Oct 2025 11:46:33 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 316168/1408335 (22.4%)
+Fri 10 Oct 2025 11:46:33 INFO     显著加权 (>3.0倍 或 <0.3倍): 826/1408335 (0.1%)
+Fri 10 Oct 2025 11:46:57 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 11:46:57 INFO     Top-10: 0.300 (30.0% 相同)
+Fri 10 Oct 2025 11:46:57 INFO     Top-20: 0.500 (50.0% 相同)
+Fri 10 Oct 2025 11:46:57 INFO     Top-30: 0.600 (60.0% 相同)
+Fri 10 Oct 2025 11:46:57 INFO     Top-50: 0.680 (68.0% 相同)
+Fri 10 Oct 2025 11:46:57 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 11:46:57 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 11:46:57 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 11:46:57 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 11:46:57 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 11:46:57 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 11:46:57 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 11:46:57 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 11:46:57 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 11:46:57 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 11:46:57 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 11:46:57 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 11:46:57 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 11:46:57 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 11:46:57 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 11:46:57 INFO     权重标准差: 0.224, 极端权重比例: 1.4%
+Fri 10 Oct 2025 11:46:57 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 11:46:57 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 11:46:57 INFO  ================================================================================
+Fri 10 Oct 2025 12:05:17 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 12:06:02 INFO  1. 基础统计 (总计 1568629 pairs):
+Fri 10 Oct 2025 12:06:03 INFO     共现频次: mean=0.9822, std=5.2734, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 12:06:04 INFO     语义权重因子: mean=0.8691, std=0.2325, range=[0.0290, 15.1754]
+Fri 10 Oct 2025 12:06:04 INFO     优先级分数: mean=0.7042, std=0.9954, range=[0.0102, 67.9759]
+Fri 10 Oct 2025 12:06:04 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 12:06:04 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 12:06:04 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 12:06:05 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 12:06:05 INFO     优先级方差: 0.990894
+Fri 10 Oct 2025 12:06:05 INFO     频次方差: 27.808912
+Fri 10 Oct 2025 12:06:05 INFO     权重因子方差: 0.054070
+Fri 10 Oct 2025 12:06:05 INFO     权重因子方差/频次方差比: 0.001944
+Fri 10 Oct 2025 12:06:05 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 12:06:05 INFO     接近无权重 (0.9-1.1倍): 365691/1568629 (23.3%)
+Fri 10 Oct 2025 12:06:05 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 855646/1568629 (54.5%)
+Fri 10 Oct 2025 12:06:05 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 346189/1568629 (22.1%)
+Fri 10 Oct 2025 12:06:05 INFO     显著加权 (>3.0倍 或 <0.3倍): 1103/1568629 (0.1%)
+Fri 10 Oct 2025 12:06:32 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 12:06:32 INFO     Top-10: 0.300 (30.0% 相同)
+Fri 10 Oct 2025 12:06:32 INFO     Top-20: 0.500 (50.0% 相同)
+Fri 10 Oct 2025 12:06:32 INFO     Top-30: 0.600 (60.0% 相同)
+Fri 10 Oct 2025 12:06:32 INFO     Top-50: 0.680 (68.0% 相同)
+Fri 10 Oct 2025 12:06:32 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 12:06:32 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 12:06:32 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 12:06:32 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 12:06:32 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 12:06:32 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 12:06:32 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 12:06:32 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 12:06:32 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 12:06:32 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 12:06:32 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 12:06:32 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 12:06:32 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 12:06:32 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 12:06:32 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 12:06:32 INFO     权重标准差: 0.233, 极端权重比例: 1.4%
+Fri 10 Oct 2025 12:06:32 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 12:06:32 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 12:06:32 INFO  ================================================================================
+Fri 10 Oct 2025 12:25:00 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 12:25:49 INFO  1. 基础统计 (总计 1675465 pairs):
+Fri 10 Oct 2025 12:25:50 INFO     共现频次: mean=0.9591, std=5.1209, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 12:25:50 INFO     语义权重因子: mean=0.8712, std=0.2445, range=[0.0290, 29.9058]
+Fri 10 Oct 2025 12:25:50 INFO     优先级分数: mean=0.7033, std=0.9745, range=[0.0102, 67.9759]
+Fri 10 Oct 2025 12:25:50 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 12:25:50 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 12:25:51 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 12:25:51 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 12:25:51 INFO     优先级方差: 0.949582
+Fri 10 Oct 2025 12:25:51 INFO     频次方差: 26.223731
+Fri 10 Oct 2025 12:25:51 INFO     权重因子方差: 0.059805
+Fri 10 Oct 2025 12:25:51 INFO     权重因子方差/频次方差比: 0.002281
+Fri 10 Oct 2025 12:25:52 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 12:25:52 INFO     接近无权重 (0.9-1.1倍): 393535/1675465 (23.5%)
+Fri 10 Oct 2025 12:25:52 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 914813/1675465 (54.6%)
+Fri 10 Oct 2025 12:25:52 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 365714/1675465 (21.8%)
+Fri 10 Oct 2025 12:25:52 INFO     显著加权 (>3.0倍 或 <0.3倍): 1403/1675465 (0.1%)
+Fri 10 Oct 2025 12:26:20 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 12:26:20 INFO     Top-10: 0.300 (30.0% 相同)
+Fri 10 Oct 2025 12:26:20 INFO     Top-20: 0.500 (50.0% 相同)
+Fri 10 Oct 2025 12:26:20 INFO     Top-30: 0.600 (60.0% 相同)
+Fri 10 Oct 2025 12:26:20 INFO     Top-50: 0.680 (68.0% 相同)
+Fri 10 Oct 2025 12:26:20 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 12:26:20 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 12:26:20 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 12:26:20 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 12:26:20 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 12:26:20 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 12:26:20 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 12:26:20 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 12:26:20 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 12:26:20 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 12:26:20 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 12:26:20 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 12:26:20 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 12:26:20 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 12:26:20 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 12:26:20 INFO     权重标准差: 0.245, 极端权重比例: 1.4%
+Fri 10 Oct 2025 12:26:20 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 12:26:20 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 12:26:20 INFO  ================================================================================
+Fri 10 Oct 2025 12:44:26 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 12:45:16 INFO  1. 基础统计 (总计 1748299 pairs):
+Fri 10 Oct 2025 12:45:17 INFO     共现频次: mean=0.9460, std=5.0228, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 12:45:17 INFO     语义权重因子: mean=0.8864, std=2.2230, range=[0.0290, 873.7257]
+Fri 10 Oct 2025 12:45:18 INFO     优先级分数: mean=0.7160, std=2.2608, range=[0.0102, 873.7257]
+Fri 10 Oct 2025 12:45:18 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 12:45:18 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 12:45:18 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 12:45:19 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 12:45:19 INFO     优先级方差: 5.111180
+Fri 10 Oct 2025 12:45:19 INFO     频次方差: 25.228355
+Fri 10 Oct 2025 12:45:19 INFO     权重因子方差: 4.941560
+Fri 10 Oct 2025 12:45:19 INFO     权重因子方差/频次方差比: 0.195873
+Fri 10 Oct 2025 12:45:19 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 12:45:19 INFO     接近无权重 (0.9-1.1倍): 413053/1748299 (23.6%)
+Fri 10 Oct 2025 12:45:19 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 954906/1748299 (54.6%)
+Fri 10 Oct 2025 12:45:19 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 378223/1748299 (21.6%)
+Fri 10 Oct 2025 12:45:19 INFO     显著加权 (>3.0倍 或 <0.3倍): 2117/1748299 (0.1%)
+Fri 10 Oct 2025 12:45:49 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 12:45:49 INFO     Top-10: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 12:45:49 INFO     Top-20: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 12:45:49 INFO     Top-30: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 12:45:49 INFO     Top-50: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 12:45:49 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 12:45:49 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 12:45:49 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 12:45:49 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 12:45:49 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 12:45:49 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 12:45:49 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 12:45:49 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 12:45:49 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 12:45:49 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 12:45:49 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 12:45:49 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 12:45:49 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 12:45:49 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 12:45:49 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 12:45:49 INFO     权重标准差: 2.223, 极端权重比例: 1.4%
+Fri 10 Oct 2025 12:45:49 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 12:45:49 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 12:45:49 INFO     建议β: 2.500 → 2.000 (平滑权重变化)
+Fri 10 Oct 2025 12:45:49 INFO  ================================================================================
+Fri 10 Oct 2025 13:03:13 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 13:04:05 INFO  1. 基础统计 (总计 1799957 pairs):
+Fri 10 Oct 2025 13:04:06 INFO     共现频次: mean=0.9380, std=4.9558, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 13:04:07 INFO     语义权重因子: mean=0.9379, std=6.6165, range=[0.0290, 2981.6975]
+Fri 10 Oct 2025 13:04:07 INFO     优先级分数: mean=0.7603, std=6.2206, range=[0.0102, 2981.6975]
+Fri 10 Oct 2025 13:04:07 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 13:04:07 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 13:04:08 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 13:04:08 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 13:04:08 INFO     优先级方差: 38.696097
+Fri 10 Oct 2025 13:04:08 INFO     频次方差: 24.559586
+Fri 10 Oct 2025 13:04:08 INFO     权重因子方差: 43.777892
+Fri 10 Oct 2025 13:04:08 INFO     权重因子方差/频次方差比: 1.782518
+Fri 10 Oct 2025 13:04:09 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 13:04:09 INFO     接近无权重 (0.9-1.1倍): 427764/1799957 (23.8%)
+Fri 10 Oct 2025 13:04:09 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 982743/1799957 (54.6%)
+Fri 10 Oct 2025 13:04:09 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 386259/1799957 (21.5%)
+Fri 10 Oct 2025 13:04:09 INFO     显著加权 (>3.0倍 或 <0.3倍): 3191/1799957 (0.2%)
+Fri 10 Oct 2025 13:04:39 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 13:04:39 INFO     Top-10: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:04:39 INFO     Top-20: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:04:39 INFO     Top-30: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:04:39 INFO     Top-50: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:04:39 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 13:04:39 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 13:04:39 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 13:04:39 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 13:04:39 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 13:04:39 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 13:04:39 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 13:04:39 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 13:04:39 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 13:04:39 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 13:04:39 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 13:04:39 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 13:04:39 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 13:04:39 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 13:04:40 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 13:04:40 INFO     权重标准差: 6.616, 极端权重比例: 1.5%
+Fri 10 Oct 2025 13:04:40 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 13:04:40 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 13:04:40 INFO     建议β: 2.500 → 2.000 (平滑权重变化)
+Fri 10 Oct 2025 13:04:40 INFO  ================================================================================
+Fri 10 Oct 2025 13:21:17 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 13:22:11 INFO  1. 基础统计 (总计 1839268 pairs):
+Fri 10 Oct 2025 13:22:12 INFO     共现频次: mean=0.9326, std=4.9062, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 13:22:13 INFO     语义权重因子: mean=0.9678, std=8.1535, range=[0.0290, 2981.6975]
+Fri 10 Oct 2025 13:22:13 INFO     优先级分数: mean=0.7879, std=7.7248, range=[0.0102, 2981.6975]
+Fri 10 Oct 2025 13:22:13 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 13:22:13 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 13:22:13 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 13:22:14 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 13:22:14 INFO     优先级方差: 59.672837
+Fri 10 Oct 2025 13:22:14 INFO     频次方差: 24.071028
+Fri 10 Oct 2025 13:22:14 INFO     权重因子方差: 66.480157
+Fri 10 Oct 2025 13:22:14 INFO     权重因子方差/频次方差比: 2.761833
+Fri 10 Oct 2025 13:22:15 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 13:22:15 INFO     接近无权重 (0.9-1.1倍): 439126/1839268 (23.9%)
+Fri 10 Oct 2025 13:22:15 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 1004354/1839268 (54.6%)
+Fri 10 Oct 2025 13:22:15 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 391671/1839268 (21.3%)
+Fri 10 Oct 2025 13:22:15 INFO     显著加权 (>3.0倍 或 <0.3倍): 4117/1839268 (0.2%)
+Fri 10 Oct 2025 13:22:46 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 13:22:46 INFO     Top-10: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:22:46 INFO     Top-20: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:22:46 INFO     Top-30: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:22:46 INFO     Top-50: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:22:46 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 13:22:46 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 13:22:46 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 13:22:46 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 13:22:46 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 13:22:46 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 13:22:46 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 13:22:46 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 13:22:46 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 13:22:46 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 13:22:46 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 13:22:46 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 13:22:46 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 13:22:46 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 13:22:46 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 13:22:46 INFO     权重标准差: 8.154, 极端权重比例: 1.5%
+Fri 10 Oct 2025 13:22:46 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 13:22:46 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 13:22:46 INFO     建议β: 2.500 → 2.000 (平滑权重变化)
+Fri 10 Oct 2025 13:22:46 INFO  ================================================================================
+Fri 10 Oct 2025 13:39:38 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 13:40:33 INFO  1. 基础统计 (总计 1875661 pairs):
+Fri 10 Oct 2025 13:40:34 INFO     共现频次: mean=0.9281, std=4.8612, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 13:40:34 INFO     语义权重因子: mean=0.9723, std=8.0821, range=[0.0290, 2981.6975]
+Fri 10 Oct 2025 13:40:35 INFO     优先级分数: mean=0.7919, std=7.6559, range=[0.0102, 2981.6975]
+Fri 10 Oct 2025 13:40:35 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 13:40:35 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 13:40:35 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 13:40:35 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 13:40:35 INFO     优先级方差: 58.613263
+Fri 10 Oct 2025 13:40:35 INFO     频次方差: 23.631294
+Fri 10 Oct 2025 13:40:35 INFO     权重因子方差: 65.320245
+Fri 10 Oct 2025 13:40:35 INFO     权重因子方差/频次方差比: 2.764142
+Fri 10 Oct 2025 13:40:36 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 13:40:36 INFO     接近无权重 (0.9-1.1倍): 449797/1875661 (24.0%)
+Fri 10 Oct 2025 13:40:36 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 1024070/1875661 (54.6%)
+Fri 10 Oct 2025 13:40:36 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 396844/1875661 (21.2%)
+Fri 10 Oct 2025 13:40:36 INFO     显著加权 (>3.0倍 或 <0.3倍): 4950/1875661 (0.3%)
+Fri 10 Oct 2025 13:41:08 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 13:41:08 INFO     Top-10: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:41:08 INFO     Top-20: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:41:08 INFO     Top-30: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:41:08 INFO     Top-50: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:41:08 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 13:41:08 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 13:41:08 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 13:41:08 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 13:41:08 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 13:41:08 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 13:41:08 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 13:41:08 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 13:41:08 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 13:41:08 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 13:41:08 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 13:41:08 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 13:41:08 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 13:41:08 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 13:41:09 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 13:41:09 INFO     权重标准差: 8.082, 极端权重比例: 1.6%
+Fri 10 Oct 2025 13:41:09 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 13:41:09 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 13:41:09 INFO     建议β: 2.500 → 2.000 (平滑权重变化)
+Fri 10 Oct 2025 13:41:09 INFO  ================================================================================
+Fri 10 Oct 2025 13:56:41 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 13:57:38 INFO  1. 基础统计 (总计 1901778 pairs):
+Fri 10 Oct 2025 13:57:39 INFO     共现频次: mean=0.9253, std=4.8296, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 13:57:39 INFO     语义权重因子: mean=0.9938, std=8.1385, range=[0.0290, 2981.6975]
+Fri 10 Oct 2025 13:57:39 INFO     优先级分数: mean=0.8089, std=7.6837, range=[0.0102, 2981.6975]
+Fri 10 Oct 2025 13:57:39 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 13:57:40 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 13:57:40 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 13:57:40 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 13:57:40 INFO     优先级方差: 59.039075
+Fri 10 Oct 2025 13:57:40 INFO     频次方差: 23.325391
+Fri 10 Oct 2025 13:57:40 INFO     权重因子方差: 66.234641
+Fri 10 Oct 2025 13:57:40 INFO     权重因子方差/频次方差比: 2.839594
+Fri 10 Oct 2025 13:57:41 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 13:57:41 INFO     接近无权重 (0.9-1.1倍): 457437/1901778 (24.1%)
+Fri 10 Oct 2025 13:57:41 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 1037627/1901778 (54.6%)
+Fri 10 Oct 2025 13:57:41 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 400591/1901778 (21.1%)
+Fri 10 Oct 2025 13:57:41 INFO     显著加权 (>3.0倍 或 <0.3倍): 6123/1901778 (0.3%)
+Fri 10 Oct 2025 13:58:14 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 13:58:14 INFO     Top-10: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:58:14 INFO     Top-20: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:58:14 INFO     Top-30: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:58:14 INFO     Top-50: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 13:58:14 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 13:58:14 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 13:58:14 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 13:58:14 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 13:58:14 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 13:58:14 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 13:58:14 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 13:58:14 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 13:58:14 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 13:58:14 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 13:58:14 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 13:58:14 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 13:58:14 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 13:58:14 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 13:58:14 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 13:58:14 INFO     权重标准差: 8.138, 极端权重比例: 1.6%
+Fri 10 Oct 2025 13:58:14 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 13:58:14 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 13:58:14 INFO     建议β: 2.500 → 2.000 (平滑权重变化)
+Fri 10 Oct 2025 13:58:14 INFO  ================================================================================
+Fri 10 Oct 2025 14:10:23 INFO  
+=== 训练完成 - 最终权重有效性分析 ===
+Fri 10 Oct 2025 14:10:23 INFO  
+=== 权重有效性深度分析 ===
+Fri 10 Oct 2025 14:11:20 INFO  1. 基础统计 (总计 1921936 pairs):
+Fri 10 Oct 2025 14:11:21 INFO     共现频次: mean=0.9231, std=4.8055, range=[0.0400, 625.9200]
+Fri 10 Oct 2025 14:11:21 INFO     语义权重因子: mean=0.9945, std=8.0969, range=[0.0290, 2981.6975]
+Fri 10 Oct 2025 14:11:21 INFO     优先级分数: mean=0.8099, std=7.6443, range=[0.0102, 2981.6975]
+Fri 10 Oct 2025 14:11:21 INFO     基础参数: α_base=0.650, β_base=2.500, γ=2.800
+Fri 10 Oct 2025 14:11:22 INFO     实际α范围: [0.325, 0.650], mean=0.341
+Fri 10 Oct 2025 14:11:22 INFO     实际β范围: [2.000, 2.000], mean=2.000
+Fri 10 Oct 2025 14:11:22 INFO  
+2. 权重影响程度:
+Fri 10 Oct 2025 14:11:22 INFO     优先级方差: 58.436080
+Fri 10 Oct 2025 14:11:22 INFO     频次方差: 23.093045
+Fri 10 Oct 2025 14:11:22 INFO     权重因子方差: 65.559621
+Fri 10 Oct 2025 14:11:22 INFO     权重因子方差/频次方差比: 2.838934
+Fri 10 Oct 2025 14:11:23 INFO  
+3. 权重因子分布:
+Fri 10 Oct 2025 14:11:23 INFO     接近无权重 (0.9-1.1倍): 463342/1921936 (24.1%)
+Fri 10 Oct 2025 14:11:23 INFO     轻微加权 (1.1-1.5倍 或 0.7-0.9倍): 1048411/1921936 (54.5%)
+Fri 10 Oct 2025 14:11:23 INFO     中度加权 (1.5-3.0倍 或 0.3-0.7倍): 403651/1921936 (21.0%)
+Fri 10 Oct 2025 14:11:23 INFO     显著加权 (>3.0倍 或 <0.3倍): 6532/1921936 (0.3%)
+Fri 10 Oct 2025 14:11:56 INFO  
+4. 排序影响 (Top-重叠度):
+Fri 10 Oct 2025 14:11:56 INFO     Top-10: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 14:11:56 INFO     Top-20: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 14:11:56 INFO     Top-30: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 14:11:56 INFO     Top-50: 0.000 (0.0% 相同)
+Fri 10 Oct 2025 14:11:56 INFO  
+5. 典型案例 (前10高频pairs):
+Fri 10 Oct 2025 14:11:56 INFO     格式: (tk1,tk2) | cnt | w_factor | priority | freq^α | 语义影响
+Fri 10 Oct 2025 14:11:56 INFO     --------------------------------------------------------------------------------
+Fri 10 Oct 2025 14:11:56 INFO     (117,857) | 625.92 |   0.927 |    60.96 |   65.73 | →1.0x
+Fri 10 Oct 2025 14:11:56 INFO     (637,939) | 542.08 |   0.585 |    35.02 |   59.86 | ↓0.58x
+Fri 10 Oct 2025 14:11:56 INFO     (1123,1124) | 533.83 |   0.439 |    26.02 |   59.27 | ↓0.44x
+Fri 10 Oct 2025 14:11:56 INFO     ( 39,679) | 469.08 |   0.979 |    53.37 |   54.49 | →1.0x
+Fri 10 Oct 2025 14:11:56 INFO     (800,1101) | 439.36 |   0.942 |    49.18 |   52.22 | →1.0x
+Fri 10 Oct 2025 14:11:56 INFO     ( 69,281) | 425.86 |   0.701 |    35.87 |   51.17 | ↓0.70x
+Fri 10 Oct 2025 14:11:56 INFO     (281,637) | 406.26 |   0.569 |    28.26 |   49.63 | ↓0.57x
+Fri 10 Oct 2025 14:11:56 INFO     (281,939) | 402.63 |   0.618 |    30.51 |   49.34 | ↓0.62x
+Fri 10 Oct 2025 14:11:56 INFO     (248,885) | 390.40 |   0.746 |    36.05 |   48.36 | ↓0.75x
+Fri 10 Oct 2025 14:11:56 INFO     (435,805) | 380.46 |   0.847 |    40.27 |   47.56 | →1.0x
+Fri 10 Oct 2025 14:11:56 INFO  
+6. 诊断结论:
+Fri 10 Oct 2025 14:11:57 INFO   权重发挥了适度而有效的作用
+Fri 10 Oct 2025 14:11:57 INFO     权重标准差: 8.097, 极端权重比例: 1.7%
+Fri 10 Oct 2025 14:11:57 INFO  
+7. 参数调优建议:
+Fri 10 Oct 2025 14:11:57 INFO     当前γ=2.800较为合适
+Fri 10 Oct 2025 14:11:57 INFO     建议β: 2.500 → 2.000 (平滑权重变化)
+Fri 10 Oct 2025 14:11:57 INFO  ================================================================================
+Fri 10 Oct 2025 14:11:57 INFO  最终词汇表大小: 40000
+Fri 10 Oct 2025 14:11:57 INFO  [TOKENIZER] Saved trained vocabulary to cache/AmazonReviews2014/Beauty/processed/actionpiece.json
+Fri 10 Oct 2025 14:12:17 WARNING  Parameter 'function'=<function ActionPieceTokenizer.tokenize.<locals>.create_tokenize_func.<locals>.tokenize_func at 0x7f2a4e793ac0> of the transform datasets.arrow_dataset.Dataset._map_single couldn't be hashed properly, a random hash was used instead. Make sure your transforms and parameters are serializable with pickle or dill for the dataset fingerprinting and caching to work. If you reuse this transform, the caching mechanism will consider it to be different from the previous calls and recompute everything. This warning is only showed once. Subsequent hashing failures won't be showed.
+Fri 10 Oct 2025 14:13:34 INFO  ActionPiece(
+  (t5): T5ForConditionalGeneration(
+    (shared): Embedding(40002, 128)
+    (encoder): T5Stack(
+      (embed_tokens): Embedding(40002, 128)
+      (block): ModuleList(
+        (0): T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+                (relative_attention_bias): Embedding(32, 6)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerFF(
+              (DenseReluDense): T5DenseActDense(
+                (wi): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): ReLU()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+        (1-3): 3 x T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerFF(
+              (DenseReluDense): T5DenseActDense(
+                (wi): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): ReLU()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+      )
+      (final_layer_norm): T5LayerNorm()
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (decoder): T5Stack(
+      (embed_tokens): Embedding(40002, 128)
+      (block): ModuleList(
+        (0): T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+                (relative_attention_bias): Embedding(32, 6)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerCrossAttention(
+              (EncDecAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (2): T5LayerFF(
+              (DenseReluDense): T5DenseActDense(
+                (wi): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): ReLU()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+        (1-3): 3 x T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerCrossAttention(
+              (EncDecAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (2): T5LayerFF(
+              (DenseReluDense): T5DenseActDense(
+                (wi): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): ReLU()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+      )
+      (final_layer_norm): T5LayerNorm()
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (lm_head): Linear(in_features=128, out_features=40002, bias=False)
+  )
+)
+Fri 10 Oct 2025 14:13:34 INFO  #Embedding parameters: 5120256
+#Non-embedding parameters: 4459648
+#Total trainable parameters: 9579904
+
+Fri 10 Oct 2025 14:14:03 INFO  [Epoch 1] Train Loss: 8.52699590564238
+Fri 10 Oct 2025 14:14:29 INFO  [Epoch 2] Train Loss: 7.741357833031087
+Fri 10 Oct 2025 14:15:59 INFO  [Epoch 2] Val Results: OrderedDict([('ndcg@5', 0.0028400702867656946), ('ndcg@10', 0.003297033254057169), ('ndcg@20', 0.0033944849856197834), ('ndcg@50', 0.0033944849856197834), ('recall@5', 0.0041586547158658504), ('recall@10', 0.005544873420149088), ('recall@20', 0.0059026069939136505), ('recall@50', 0.0059026069939136505), ('err@5', 0.0), ('err@10', 0.015418325550854206), ('err@20', 0.47140365839004517), ('err@50', 0.7885614633560181)])
+Fri 10 Oct 2025 14:15:59 INFO  [Epoch 2] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:16:25 INFO  [Epoch 3] Train Loss: 7.278678523891167
+Fri 10 Oct 2025 14:16:50 INFO  [Epoch 4] Train Loss: 6.809894823378626
+Fri 10 Oct 2025 14:18:26 INFO  [Epoch 4] Val Results: OrderedDict([('ndcg@5', 0.005471362266689539), ('ndcg@10', 0.006452662404626608), ('ndcg@20', 0.006891811732202768), ('ndcg@50', 0.006951692048460245), ('recall@5', 0.008227876387536526), ('recall@10', 0.011358046904206276), ('recall@20', 0.013101998716592789), ('recall@50', 0.013370298780500889), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.008545365184545517), ('err@50', 0.5941323041915894)])
+Fri 10 Oct 2025 14:18:26 INFO  [Epoch 4] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:18:52 INFO  [Epoch 5] Train Loss: 6.380201887063943
+Fri 10 Oct 2025 14:19:17 INFO  [Epoch 6] Train Loss: 5.9960633001438834
+Fri 10 Oct 2025 14:20:53 INFO  [Epoch 6] Val Results: OrderedDict([('ndcg@5', 0.005480792839080095), ('ndcg@10', 0.006995262578129768), ('ndcg@20', 0.00843352172523737), ('ndcg@50', 0.009597010910511017), ('recall@5', 0.009792961180210114), ('recall@10', 0.014577650465071201), ('recall@20', 0.020346106961369514), ('recall@50', 0.025846263393759727), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.4069472551345825)])
+Fri 10 Oct 2025 14:20:53 INFO  [Epoch 6] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:21:19 INFO  [Epoch 7] Train Loss: 5.655501751584302
+Fri 10 Oct 2025 14:21:45 INFO  [Epoch 8] Train Loss: 5.333426227829336
+Fri 10 Oct 2025 14:23:23 INFO  [Epoch 8] Val Results: OrderedDict([('ndcg@5', 0.0052728308364748955), ('ndcg@10', 0.0065072933211922646), ('ndcg@20', 0.008357016369700432), ('ndcg@50', 0.011357756331562996), ('recall@5', 0.009748244658112526), ('recall@10', 0.013593882322311401), ('recall@20', 0.020882708951830864), ('recall@50', 0.035728659480810165), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.2188132256269455)])
+Fri 10 Oct 2025 14:23:49 INFO  [Epoch 9] Train Loss: 5.025704818013113
+Fri 10 Oct 2025 14:24:14 INFO  [Epoch 10] Train Loss: 4.726583171911277
+Fri 10 Oct 2025 14:25:54 INFO  [Epoch 10] Val Results: OrderedDict([('ndcg@5', 0.0057675642892718315), ('ndcg@10', 0.008238800801336765), ('ndcg@20', 0.010522237047553062), ('ndcg@50', 0.013896243646740913), ('recall@5', 0.009792961180210114), ('recall@10', 0.017305370420217514), ('recall@20', 0.026382865384221077), ('recall@50', 0.04355408623814583), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0014264634810388088), ('err@50', 0.06511648744344711)])
+Fri 10 Oct 2025 14:25:54 INFO  [Epoch 10] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:26:20 INFO  [Epoch 11] Train Loss: 4.448309623777634
+Fri 10 Oct 2025 14:26:45 INFO  [Epoch 12] Train Loss: 4.205147664834553
+Fri 10 Oct 2025 14:28:25 INFO  [Epoch 12] Val Results: OrderedDict([('ndcg@5', 0.005179323721677065), ('ndcg@10', 0.006805327255278826), ('ndcg@20', 0.009489764459431171), ('ndcg@50', 0.012978238984942436), ('recall@5', 0.008898627012968063), ('recall@10', 0.014041050337255001), ('recall@20', 0.024594195187091827), ('recall@50', 0.04243616759777069), ('err@5', 0.018405400216579437), ('err@10', 0.02177257090806961), ('err@20', 0.024122431874275208), ('err@50', 0.09436747431755066)])
+Fri 10 Oct 2025 14:28:50 INFO  [Epoch 13] Train Loss: 3.998916825431794
+Fri 10 Oct 2025 14:29:16 INFO  [Epoch 14] Train Loss: 3.8206824523465643
+Fri 10 Oct 2025 14:30:56 INFO  [Epoch 14] Val Results: OrderedDict([('ndcg@5', 0.005876378621906042), ('ndcg@10', 0.008027713745832443), ('ndcg@20', 0.011429300531744957), ('ndcg@50', 0.016021613031625748), ('recall@5', 0.009971828199923038), ('recall@10', 0.01685820333659649), ('recall@20', 0.030228503048419952), ('recall@50', 0.05361534655094147), ('err@5', 0.04015561193227768), ('err@10', 0.040830835700035095), ('err@20', 0.04169386997818947), ('err@50', 0.0777122899889946)])
+Fri 10 Oct 2025 14:31:22 INFO  [Epoch 15] Train Loss: 3.6719948285284674
+Fri 10 Oct 2025 14:31:47 INFO  [Epoch 16] Train Loss: 3.5437533549297644
+Fri 10 Oct 2025 14:33:27 INFO  [Epoch 16] Val Results: OrderedDict([('ndcg@5', 0.005368902813643217), ('ndcg@10', 0.00817086175084114), ('ndcg@20', 0.010964447632431984), ('ndcg@50', 0.016068045049905777), ('recall@5', 0.0090327775105834), ('recall@10', 0.01775253750383854), ('recall@20', 0.028797566890716553), ('recall@50', 0.05477797985076904), ('err@5', 0.055055227130651474), ('err@10', 0.05636543035507202), ('err@20', 0.05839556083083153), ('err@50', 0.06207485869526863)])
+Fri 10 Oct 2025 14:33:53 INFO  [Epoch 17] Train Loss: 3.432935300968037
+Fri 10 Oct 2025 14:34:18 INFO  [Epoch 18] Train Loss: 3.3390643109607328
+Fri 10 Oct 2025 14:35:58 INFO  [Epoch 18] Val Results: OrderedDict([('ndcg@5', 0.005559287965297699), ('ndcg@10', 0.007587427739053965), ('ndcg@20', 0.01030057668685913), ('ndcg@50', 0.01462287176400423), ('recall@5', 0.009122210554778576), ('recall@10', 0.015382551588118076), ('recall@20', 0.02615928091108799), ('recall@50', 0.048115190118551254), ('err@5', 0.06198631599545479), ('err@10', 0.06273755431175232), ('err@20', 0.06432723999023438), ('err@50', 0.06905335187911987)])
+Fri 10 Oct 2025 14:36:24 INFO  [Epoch 19] Train Loss: 3.2603925220697305
+Fri 10 Oct 2025 14:36:49 INFO  [Epoch 20] Train Loss: 3.1896608789607246
+Fri 10 Oct 2025 14:38:30 INFO  [Epoch 20] Val Results: OrderedDict([('ndcg@5', 0.008905569091439247), ('ndcg@10', 0.011944201774895191), ('ndcg@20', 0.015282080508768559), ('ndcg@50', 0.020876072347164154), ('recall@5', 0.014756517484784126), ('recall@10', 0.024147028103470802), ('recall@20', 0.03742789477109909), ('recall@50', 0.06568886339664459), ('err@5', 0.03044314496219158), ('err@10', 0.03143138438463211), ('err@20', 0.0330277718603611), ('err@50', 0.038231007754802704)])
+Fri 10 Oct 2025 14:38:30 INFO  [Epoch 20] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:38:56 INFO  [Epoch 21] Train Loss: 3.1142645990802156
+Fri 10 Oct 2025 14:39:21 INFO  [Epoch 22] Train Loss: 3.0520728251349603
+Fri 10 Oct 2025 14:41:04 INFO  [Epoch 22] Val Results: OrderedDict([('ndcg@5', 0.011730724945664406), ('ndcg@10', 0.015634484589099884), ('ndcg@20', 0.02087414264678955), ('ndcg@50', 0.02885475382208824), ('recall@5', 0.01882573962211609), ('recall@10', 0.031033404171466827), ('recall@20', 0.05182667821645737), ('recall@50', 0.09242945909500122), ('err@5', 0.0006707508000545204), ('err@10', 0.0013236149679869413), ('err@20', 0.0023476278875023127), ('err@50', 0.008253811858594418)])
+Fri 10 Oct 2025 14:41:04 INFO  [Epoch 22] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:41:29 INFO  [Epoch 23] Train Loss: 3.0004296553274075
+Fri 10 Oct 2025 14:41:55 INFO  [Epoch 24] Train Loss: 2.958925068610373
+Fri 10 Oct 2025 14:43:36 INFO  [Epoch 24] Val Results: OrderedDict([('ndcg@5', 0.011475608684122562), ('ndcg@10', 0.015605668537318707), ('ndcg@20', 0.020641880109906197), ('ndcg@50', 0.030145859345793724), ('recall@5', 0.019138755276799202), ('recall@10', 0.03188301995396614), ('recall@20', 0.05196082964539528), ('recall@50', 0.10021016746759415), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0010767787462100387)])
+Fri 10 Oct 2025 14:44:01 INFO  [Epoch 25] Train Loss: 2.924549867206974
+Fri 10 Oct 2025 14:44:27 INFO  [Epoch 26] Train Loss: 2.897164178729521
+Fri 10 Oct 2025 14:46:08 INFO  [Epoch 26] Val Results: OrderedDict([('ndcg@5', 0.012465613894164562), ('ndcg@10', 0.01769215427339077), ('ndcg@20', 0.02324993535876274), ('ndcg@50', 0.03298471122980118), ('recall@5', 0.019988372921943665), ('recall@10', 0.03630997613072395), ('recall@20', 0.058489467948675156), ('recall@50', 0.10781200975179672), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 9.301077079726383e-05)])
+Fri 10 Oct 2025 14:46:08 INFO  [Epoch 26] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:46:33 INFO  [Epoch 27] Train Loss: 2.8708453057804926
+Fri 10 Oct 2025 14:46:59 INFO  [Epoch 28] Train Loss: 2.84790539834286
+Fri 10 Oct 2025 14:48:40 INFO  [Epoch 28] Val Results: OrderedDict([('ndcg@5', 0.013732010498642921), ('ndcg@10', 0.019196420907974243), ('ndcg@20', 0.025019468739628792), ('ndcg@50', 0.03595821186900139), ('recall@5', 0.02222421020269394), ('recall@10', 0.039305996149778366), ('recall@20', 0.06251397728919983), ('recall@50', 0.11787327378988266), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 6.975807627895847e-05)])
+Fri 10 Oct 2025 14:48:40 INFO  [Epoch 28] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:49:05 INFO  [Epoch 29] Train Loss: 2.8240010817227197
+Fri 10 Oct 2025 14:49:31 INFO  [Epoch 30] Train Loss: 2.804585564925049
+Fri 10 Oct 2025 14:51:12 INFO  [Epoch 30] Val Results: OrderedDict([('ndcg@5', 0.016568271443247795), ('ndcg@10', 0.022760914638638496), ('ndcg@20', 0.02943836897611618), ('ndcg@50', 0.040075283497571945), ('recall@5', 0.027098331600427628), ('recall@10', 0.04641595482826233), ('recall@20', 0.07293296605348587), ('recall@50', 0.12690605223178864), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 5.187139322515577e-05)])
+Fri 10 Oct 2025 14:51:12 INFO  [Epoch 30] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:51:37 INFO  [Epoch 31] Train Loss: 2.783294634596383
+Fri 10 Oct 2025 14:52:03 INFO  [Epoch 32] Train Loss: 2.7664138310614264
+Fri 10 Oct 2025 14:53:43 INFO  [Epoch 32] Val Results: OrderedDict([('ndcg@5', 0.016788074746727943), ('ndcg@10', 0.023886555805802345), ('ndcg@20', 0.03153234347701073), ('ndcg@50', 0.04318840801715851), ('recall@5', 0.027143048122525215), ('recall@10', 0.04905424267053604), ('recall@20', 0.07950633019208908), ('recall@50', 0.1386665403842926), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 1.341501501883613e-05)])
+Fri 10 Oct 2025 14:53:44 INFO  [Epoch 32] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:54:09 INFO  [Epoch 33] Train Loss: 2.749301896948759
+Fri 10 Oct 2025 14:54:35 INFO  [Epoch 34] Train Loss: 2.732122470432682
+Fri 10 Oct 2025 14:56:16 INFO  [Epoch 34] Val Results: OrderedDict([('ndcg@5', 0.018073584884405136), ('ndcg@10', 0.02496481128036976), ('ndcg@20', 0.03234536945819855), ('ndcg@50', 0.04448723793029785), ('recall@5', 0.028037382289767265), ('recall@10', 0.049546126276254654), ('recall@20', 0.07879085838794708), ('recall@50', 0.1402316391468048), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0006126189837232232)])
+Fri 10 Oct 2025 14:56:16 INFO  [Epoch 34] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:56:41 INFO  [Epoch 35] Train Loss: 2.7184773145482697
+Fri 10 Oct 2025 14:57:07 INFO  [Epoch 36] Train Loss: 2.701500152799406
+Fri 10 Oct 2025 14:58:48 INFO  [Epoch 36] Val Results: OrderedDict([('ndcg@5', 0.018401941284537315), ('ndcg@10', 0.02504422329366207), ('ndcg@20', 0.03266368433833122), ('ndcg@50', 0.04533926397562027), ('recall@5', 0.029244733974337578), ('recall@10', 0.049903858453035355), ('recall@20', 0.08026651293039322), ('recall@50', 0.1443902850151062), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 9.83767858997453e-06)])
+Fri 10 Oct 2025 14:58:48 INFO  [Epoch 36] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 14:59:13 INFO  [Epoch 37] Train Loss: 2.68943232924094
+Fri 10 Oct 2025 14:59:39 INFO  [Epoch 38] Train Loss: 2.6748904351594383
+Fri 10 Oct 2025 15:01:20 INFO  [Epoch 38] Val Results: OrderedDict([('ndcg@5', 0.020084723830223083), ('ndcg@10', 0.02749769762158394), ('ndcg@20', 0.0355883464217186), ('ndcg@50', 0.047792140394449234), ('recall@5', 0.03335867449641228), ('recall@10', 0.05643250048160553), ('recall@20', 0.08862853795289993), ('recall@50', 0.15056119859218597), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00015471984806936234)])
+Fri 10 Oct 2025 15:01:20 INFO  [Epoch 38] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:01:45 INFO  [Epoch 39] Train Loss: 2.663356184031713
+Fri 10 Oct 2025 15:02:11 INFO  [Epoch 40] Train Loss: 2.6525321493816745
+Fri 10 Oct 2025 15:03:54 INFO  [Epoch 40] Val Results: OrderedDict([('ndcg@5', 0.024139171466231346), ('ndcg@10', 0.031827524304389954), ('ndcg@20', 0.04020114988088608), ('ndcg@50', 0.053716227412223816), ('recall@5', 0.03836694359779358), ('recall@10', 0.06237982213497162), ('recall@20', 0.09569378197193146), ('recall@50', 0.1640656441450119), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 1.8781021935865283e-05)])
+Fri 10 Oct 2025 15:03:54 INFO  [Epoch 40] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:04:19 INFO  [Epoch 41] Train Loss: 2.637792386433494
+Fri 10 Oct 2025 15:04:45 INFO  [Epoch 42] Train Loss: 2.629006092650417
+Fri 10 Oct 2025 15:06:26 INFO  [Epoch 42] Val Results: OrderedDict([('ndcg@5', 0.02337411232292652), ('ndcg@10', 0.0316617377102375), ('ndcg@20', 0.040323469787836075), ('ndcg@50', 0.053529042750597), ('recall@5', 0.03711487725377083), ('recall@10', 0.06309529393911362), ('recall@20', 0.09743773192167282), ('recall@50', 0.1641997992992401), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018244421517010778)])
+Fri 10 Oct 2025 15:06:51 INFO  [Epoch 43] Train Loss: 2.619392114390659
+Fri 10 Oct 2025 15:07:17 INFO  [Epoch 44] Train Loss: 2.606967055843962
+Fri 10 Oct 2025 15:08:58 INFO  [Epoch 44] Val Results: OrderedDict([('ndcg@5', 0.02426106296479702), ('ndcg@10', 0.03265088424086571), ('ndcg@20', 0.04197782650589943), ('ndcg@50', 0.05523362010717392), ('recall@5', 0.03952958062291145), ('recall@10', 0.06573357433080673), ('recall@20', 0.10266958922147751), ('recall@50', 0.16983410716056824), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0003979787870775908)])
+Fri 10 Oct 2025 15:08:58 INFO  [Epoch 44] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:09:23 INFO  [Epoch 45] Train Loss: 2.597951592638335
+Fri 10 Oct 2025 15:09:49 INFO  [Epoch 46] Train Loss: 2.590211804274919
+Fri 10 Oct 2025 15:11:30 INFO  [Epoch 46] Val Results: OrderedDict([('ndcg@5', 0.02514117956161499), ('ndcg@10', 0.03394026309251785), ('ndcg@20', 0.04292101040482521), ('ndcg@50', 0.0567488893866539), ('recall@5', 0.04037919640541077), ('recall@10', 0.06779054552316666), ('recall@20', 0.10342977195978165), ('recall@50', 0.1735903024673462), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 2.2358359274221584e-05)])
+Fri 10 Oct 2025 15:11:30 INFO  [Epoch 46] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:11:56 INFO  [Epoch 47] Train Loss: 2.5807104282342044
+Fri 10 Oct 2025 15:12:21 INFO  [Epoch 48] Train Loss: 2.5712712247084086
+Fri 10 Oct 2025 15:14:03 INFO  [Epoch 48] Val Results: OrderedDict([('ndcg@5', 0.027381308376789093), ('ndcg@10', 0.03587077558040619), ('ndcg@20', 0.04571021348237991), ('ndcg@50', 0.059247687458992004), ('recall@5', 0.04462728649377823), ('recall@10', 0.07101015001535416), ('recall@20', 0.110047847032547), ('recall@50', 0.17882215976715088), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 4.113937757210806e-05)])
+Fri 10 Oct 2025 15:14:03 INFO  [Epoch 48] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:14:28 INFO  [Epoch 49] Train Loss: 2.564560225037749
+Fri 10 Oct 2025 15:14:54 INFO  [Epoch 50] Train Loss: 2.55638529540036
+Fri 10 Oct 2025 15:16:35 INFO  [Epoch 50] Val Results: OrderedDict([('ndcg@5', 0.025892795994877815), ('ndcg@10', 0.03476240113377571), ('ndcg@20', 0.04392366483807564), ('ndcg@50', 0.05839315801858902), ('recall@5', 0.04203371703624725), ('recall@10', 0.06980279833078384), ('recall@20', 0.10620220750570297), ('recall@50', 0.17958234250545502), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00035415642196312547)])
+Fri 10 Oct 2025 15:17:00 INFO  [Epoch 51] Train Loss: 2.549058168314774
+Fri 10 Oct 2025 15:17:26 INFO  [Epoch 52] Train Loss: 2.5417324016994076
+Fri 10 Oct 2025 15:19:07 INFO  [Epoch 52] Val Results: OrderedDict([('ndcg@5', 0.02684638649225235), ('ndcg@10', 0.035933323204517365), ('ndcg@20', 0.04550495371222496), ('ndcg@50', 0.059064120054244995), ('recall@5', 0.04283861815929413), ('recall@10', 0.07109958678483963), ('recall@20', 0.10915350914001465), ('recall@50', 0.1778831034898758), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 9.301076352130622e-05)])
+Fri 10 Oct 2025 15:19:07 INFO  [Epoch 52] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:19:33 INFO  [Epoch 53] Train Loss: 2.533050624776907
+Fri 10 Oct 2025 15:19:58 INFO  [Epoch 54] Train Loss: 2.5265128872273963
+Fri 10 Oct 2025 15:21:41 INFO  [Epoch 54] Val Results: OrderedDict([('ndcg@5', 0.02807861752808094), ('ndcg@10', 0.036439985036849976), ('ndcg@20', 0.04626435786485672), ('ndcg@50', 0.06040237098932266), ('recall@5', 0.043956536799669266), ('recall@10', 0.07016053050756454), ('recall@20', 0.10928766429424286), ('recall@50', 0.18096856772899628), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0012270266888663173)])
+Fri 10 Oct 2025 15:21:41 INFO  [Epoch 54] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:22:07 INFO  [Epoch 55] Train Loss: 2.520661268716656
+Fri 10 Oct 2025 15:22:32 INFO  [Epoch 56] Train Loss: 2.5112358758421722
+Fri 10 Oct 2025 15:24:13 INFO  [Epoch 56] Val Results: OrderedDict([('ndcg@5', 0.029339659959077835), ('ndcg@10', 0.03882812708616257), ('ndcg@20', 0.04860478639602661), ('ndcg@50', 0.06253658980131149), ('recall@5', 0.04695255681872368), ('recall@10', 0.07651031017303467), ('recall@20', 0.11550328880548477), ('recall@50', 0.18637928366661072), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 6.260340887820348e-05)])
+Fri 10 Oct 2025 15:24:13 INFO  [Epoch 56] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:24:48 INFO  [Epoch 57] Train Loss: 2.507925093869755
+Fri 10 Oct 2025 15:25:13 INFO  [Epoch 58] Train Loss: 2.4994655833633956
+Fri 10 Oct 2025 15:26:54 INFO  [Epoch 58] Val Results: OrderedDict([('ndcg@5', 0.029717925935983658), ('ndcg@10', 0.03916057571768761), ('ndcg@20', 0.04898722469806671), ('ndcg@50', 0.06382834166288376), ('recall@5', 0.04641595482826233), ('recall@10', 0.07588427513837814), ('recall@20', 0.11501140147447586), ('recall@50', 0.1904037892818451), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000472208543214947)])
+Fri 10 Oct 2025 15:26:54 INFO  [Epoch 58] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:27:20 INFO  [Epoch 59] Train Loss: 2.4940502536899847
+Fri 10 Oct 2025 15:27:45 INFO  [Epoch 60] Train Loss: 2.487690684396469
+Fri 10 Oct 2025 15:29:26 INFO  [Epoch 60] Val Results: OrderedDict([('ndcg@5', 0.029317088425159454), ('ndcg@10', 0.037726990878582), ('ndcg@20', 0.0471721813082695), ('ndcg@50', 0.06220800802111626), ('recall@5', 0.046147655695676804), ('recall@10', 0.07239636778831482), ('recall@20', 0.10995841026306152), ('recall@50', 0.18620042502880096), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002432589535601437)])
+Fri 10 Oct 2025 15:29:52 INFO  [Epoch 61] Train Loss: 2.4811995952509722
+Fri 10 Oct 2025 15:30:18 INFO  [Epoch 62] Train Loss: 2.4755794315486566
+Fri 10 Oct 2025 15:31:59 INFO  [Epoch 62] Val Results: OrderedDict([('ndcg@5', 0.029249822720885277), ('ndcg@10', 0.038923703134059906), ('ndcg@20', 0.04853680729866028), ('ndcg@50', 0.0632251501083374), ('recall@5', 0.045968785881996155), ('recall@10', 0.0760631412267685), ('recall@20', 0.1143406555056572), ('recall@50', 0.18888342380523682), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00027634931029751897)])
+Fri 10 Oct 2025 15:32:25 INFO  [Epoch 63] Train Loss: 2.46907901763916
+Fri 10 Oct 2025 15:32:50 INFO  [Epoch 64] Train Loss: 2.4634324799251925
+Fri 10 Oct 2025 15:34:31 INFO  [Epoch 64] Val Results: OrderedDict([('ndcg@5', 0.029617484658956528), ('ndcg@10', 0.03856116160750389), ('ndcg@20', 0.0484609492123127), ('ndcg@50', 0.06369003653526306), ('recall@5', 0.047533873468637466), ('recall@10', 0.0753476694226265), ('recall@20', 0.1146983876824379), ('recall@50', 0.19214774668216705), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0006779054529033601)])
+Fri 10 Oct 2025 15:34:57 INFO  [Epoch 65] Train Loss: 2.4582423904062707
+Fri 10 Oct 2025 15:35:23 INFO  [Epoch 66] Train Loss: 2.45297905072164
+Fri 10 Oct 2025 15:37:06 INFO  [Epoch 66] Val Results: OrderedDict([('ndcg@5', 0.03148737922310829), ('ndcg@10', 0.040712688118219376), ('ndcg@20', 0.050830256193876266), ('ndcg@50', 0.06586536765098572), ('recall@5', 0.05012744292616844), ('recall@10', 0.07883557677268982), ('recall@20', 0.11912534385919571), ('recall@50', 0.1954120695590973), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00012878414418082684)])
+Fri 10 Oct 2025 15:37:06 INFO  [Epoch 66] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:37:31 INFO  [Epoch 67] Train Loss: 2.445221436626716
+Fri 10 Oct 2025 15:37:57 INFO  [Epoch 68] Train Loss: 2.44225121704057
+Fri 10 Oct 2025 15:39:38 INFO  [Epoch 68] Val Results: OrderedDict([('ndcg@5', 0.03087073192000389), ('ndcg@10', 0.040125858038663864), ('ndcg@20', 0.04984906688332558), ('ndcg@50', 0.06496217846870422), ('recall@5', 0.047936324030160904), ('recall@10', 0.07673388719558716), ('recall@20', 0.11536913365125656), ('recall@50', 0.1923266053199768), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00020211956871207803)])
+Fri 10 Oct 2025 15:40:03 INFO  [Epoch 69] Train Loss: 2.436937728280687
+Fri 10 Oct 2025 15:40:29 INFO  [Epoch 70] Train Loss: 2.429678811637344
+Fri 10 Oct 2025 15:42:10 INFO  [Epoch 70] Val Results: OrderedDict([('ndcg@5', 0.03162624314427376), ('ndcg@10', 0.04096806421875954), ('ndcg@20', 0.050901807844638824), ('ndcg@50', 0.06572616100311279), ('recall@5', 0.04945669323205948), ('recall@10', 0.078567273914814), ('recall@20', 0.11796270310878754), ('recall@50', 0.19335509836673737), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0006305057322606444)])
+Fri 10 Oct 2025 15:42:10 INFO  [Epoch 70] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:42:36 INFO  [Epoch 71] Train Loss: 2.4254741065696983
+Fri 10 Oct 2025 15:43:02 INFO  [Epoch 72] Train Loss: 2.4202166874584985
+Fri 10 Oct 2025 15:44:43 INFO  [Epoch 72] Val Results: OrderedDict([('ndcg@5', 0.030707117170095444), ('ndcg@10', 0.039726950228214264), ('ndcg@20', 0.049805816262960434), ('ndcg@50', 0.06435216963291168), ('recall@5', 0.04842820763587952), ('recall@10', 0.07651031017303467), ('recall@20', 0.11662120372056961), ('recall@50', 0.1906720995903015), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0016509413253515959)])
+Fri 10 Oct 2025 15:45:08 INFO  [Epoch 73] Train Loss: 2.413490802397524
+Fri 10 Oct 2025 15:45:34 INFO  [Epoch 74] Train Loss: 2.4094769022344154
+Fri 10 Oct 2025 15:47:15 INFO  [Epoch 74] Val Results: OrderedDict([('ndcg@5', 0.032583218067884445), ('ndcg@10', 0.04194886237382889), ('ndcg@20', 0.05207123979926109), ('ndcg@50', 0.06721722334623337), ('recall@5', 0.050753477960824966), ('recall@10', 0.0799982100725174), ('recall@20', 0.12015382200479507), ('recall@50', 0.19724544882774353), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00023520994000136852)])
+Fri 10 Oct 2025 15:47:15 INFO  [Epoch 74] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:47:40 INFO  [Epoch 75] Train Loss: 2.404383544791997
+Fri 10 Oct 2025 15:48:06 INFO  [Epoch 76] Train Loss: 2.398797296828333
+Fri 10 Oct 2025 15:49:50 INFO  [Epoch 76] Val Results: OrderedDict([('ndcg@5', 0.0315343476831913), ('ndcg@10', 0.040810201317071915), ('ndcg@20', 0.04998229444026947), ('ndcg@50', 0.06532037258148193), ('recall@5', 0.05003800988197327), ('recall@10', 0.07883557677268982), ('recall@20', 0.11532442271709442), ('recall@50', 0.19299736618995667), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00013593882613349706)])
+Fri 10 Oct 2025 15:50:15 INFO  [Epoch 77] Train Loss: 2.3937311766212552
+Fri 10 Oct 2025 15:50:41 INFO  [Epoch 78] Train Loss: 2.389878975278209
+Fri 10 Oct 2025 15:52:22 INFO  [Epoch 78] Val Results: OrderedDict([('ndcg@5', 0.034269511699676514), ('ndcg@10', 0.04414752125740051), ('ndcg@20', 0.0544247142970562), ('ndcg@50', 0.06926226615905762), ('recall@5', 0.05370477959513664), ('recall@10', 0.08446988463401794), ('recall@20', 0.12525153160095215), ('recall@50', 0.20046505331993103), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002289496042067185)])
+Fri 10 Oct 2025 15:52:23 INFO  [Epoch 78] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 15:52:48 INFO  [Epoch 79] Train Loss: 2.386085948591566
+Fri 10 Oct 2025 15:53:14 INFO  [Epoch 80] Train Loss: 2.3802512438844614
+Fri 10 Oct 2025 15:54:55 INFO  [Epoch 80] Val Results: OrderedDict([('ndcg@5', 0.031200287863612175), ('ndcg@10', 0.04094061255455017), ('ndcg@20', 0.05089180916547775), ('ndcg@50', 0.06560704112052917), ('recall@5', 0.048115190118551254), ('recall@10', 0.07829897850751877), ('recall@20', 0.11773912608623505), ('recall@50', 0.1921924650669098), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002378929202677682)])
+Fri 10 Oct 2025 15:55:21 INFO  [Epoch 81] Train Loss: 2.3752993085504968
+Fri 10 Oct 2025 15:55:46 INFO  [Epoch 82] Train Loss: 2.3686288386467367
+Fri 10 Oct 2025 15:57:27 INFO  [Epoch 82] Val Results: OrderedDict([('ndcg@5', 0.032469190657138824), ('ndcg@10', 0.04194459319114685), ('ndcg@20', 0.05198492109775543), ('ndcg@50', 0.06705113500356674), ('recall@5', 0.050977058708667755), ('recall@10', 0.08044537901878357), ('recall@20', 0.1204221248626709), ('recall@50', 0.1968429982662201), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018333854677621275)])
+Fri 10 Oct 2025 15:57:53 INFO  [Epoch 83] Train Loss: 2.365568650835683
+Fri 10 Oct 2025 15:58:19 INFO  [Epoch 84] Train Loss: 2.3606738849372717
+Fri 10 Oct 2025 16:00:00 INFO  [Epoch 84] Val Results: OrderedDict([('ndcg@5', 0.032901447266340256), ('ndcg@10', 0.04272618889808655), ('ndcg@20', 0.05271351337432861), ('ndcg@50', 0.06770074367523193), ('recall@5', 0.05173724517226219), ('recall@10', 0.08223404735326767), ('recall@20', 0.12194249778985977), ('recall@50', 0.19782677292823792), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00011805213580373675)])
+Fri 10 Oct 2025 16:00:25 INFO  [Epoch 85] Train Loss: 2.3561498984288614
+Fri 10 Oct 2025 16:00:51 INFO  [Epoch 86] Train Loss: 2.350238839476025
+Fri 10 Oct 2025 16:02:32 INFO  [Epoch 86] Val Results: OrderedDict([('ndcg@5', 0.03268851339817047), ('ndcg@10', 0.042102713137865067), ('ndcg@20', 0.05239177867770195), ('ndcg@50', 0.06699913740158081), ('recall@5', 0.05084291100502014), ('recall@10', 0.08013235777616501), ('recall@20', 0.12118230760097504), ('recall@50', 0.19536735117435455), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00016813485126476735)])
+Fri 10 Oct 2025 16:02:57 INFO  [Epoch 87] Train Loss: 2.3479374452323767
+Fri 10 Oct 2025 16:03:23 INFO  [Epoch 88] Train Loss: 2.3417375639718796
+Fri 10 Oct 2025 16:05:04 INFO  [Epoch 88] Val Results: OrderedDict([('ndcg@5', 0.033298589289188385), ('ndcg@10', 0.043387532234191895), ('ndcg@20', 0.053825654089450836), ('ndcg@50', 0.06833839416503906), ('recall@5', 0.051513660699129105), ('recall@10', 0.08294951170682907), ('recall@20', 0.12467021495103836), ('recall@50', 0.19813978672027588), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00028350402135401964)])
+Fri 10 Oct 2025 16:05:29 INFO  [Epoch 89] Train Loss: 2.3360766515657594
+Fri 10 Oct 2025 16:05:55 INFO  [Epoch 90] Train Loss: 2.3330561530265364
+Fri 10 Oct 2025 16:07:37 INFO  [Epoch 90] Val Results: OrderedDict([('ndcg@5', 0.035175859928131104), ('ndcg@10', 0.044634707272052765), ('ndcg@20', 0.05564337968826294), ('ndcg@50', 0.07107557356357574), ('recall@5', 0.05397307872772217), ('recall@10', 0.08326253294944763), ('recall@20', 0.1269954890012741), ('recall@50', 0.2054286152124405), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00017171219224110246)])
+Fri 10 Oct 2025 16:07:37 INFO  [Epoch 90] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:08:02 INFO  [Epoch 91] Train Loss: 2.327104485452407
+Fri 10 Oct 2025 16:08:28 INFO  [Epoch 92] Train Loss: 2.324353773770165
+Fri 10 Oct 2025 16:10:09 INFO  [Epoch 92] Val Results: OrderedDict([('ndcg@5', 0.03517746925354004), ('ndcg@10', 0.04463069140911102), ('ndcg@20', 0.05522627383470535), ('ndcg@50', 0.07074462622404099), ('recall@5', 0.05464383214712143), ('recall@10', 0.08397799730300903), ('recall@20', 0.1260117143392563), ('recall@50', 0.20466843247413635), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00022358360001817346)])
+Fri 10 Oct 2025 16:10:35 INFO  [Epoch 93] Train Loss: 2.3193723816815983
+Fri 10 Oct 2025 16:11:00 INFO  [Epoch 94] Train Loss: 2.313871515864064
+Fri 10 Oct 2025 16:12:41 INFO  [Epoch 94] Val Results: OrderedDict([('ndcg@5', 0.0343363955616951), ('ndcg@10', 0.043617378920316696), ('ndcg@20', 0.054480794817209244), ('ndcg@50', 0.0698925033211708), ('recall@5', 0.05361534655094147), ('recall@10', 0.0822787657380104), ('recall@20', 0.1255645453929901), ('recall@50', 0.20368465781211853), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00023163259902503341)])
+Fri 10 Oct 2025 16:13:07 INFO  [Epoch 95] Train Loss: 2.3095460531776517
+Fri 10 Oct 2025 16:13:33 INFO  [Epoch 96] Train Loss: 2.3047332879634217
+Fri 10 Oct 2025 16:15:14 INFO  [Epoch 96] Val Results: OrderedDict([('ndcg@5', 0.03616364300251007), ('ndcg@10', 0.04562719911336899), ('ndcg@20', 0.055692557245492935), ('ndcg@50', 0.07100749015808105), ('recall@5', 0.05535930022597313), ('recall@10', 0.08496176451444626), ('recall@20', 0.12493851780891418), ('recall@50', 0.20265617966651917), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002915529767051339)])
+Fri 10 Oct 2025 16:15:14 INFO  [Epoch 96] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:15:40 INFO  [Epoch 97] Train Loss: 2.301360430420605
+Fri 10 Oct 2025 16:16:05 INFO  [Epoch 98] Train Loss: 2.2971457020318
+Fri 10 Oct 2025 16:17:46 INFO  [Epoch 98] Val Results: OrderedDict([('ndcg@5', 0.03447985276579857), ('ndcg@10', 0.04486464336514473), ('ndcg@20', 0.055342670530080795), ('ndcg@50', 0.07047167420387268), ('recall@5', 0.05321289598941803), ('recall@10', 0.08554308116436005), ('recall@20', 0.12717434763908386), ('recall@50', 0.20386353135108948), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00016455752484034747)])
+Fri 10 Oct 2025 16:18:12 INFO  [Epoch 99] Train Loss: 2.2913790055286096
+Fri 10 Oct 2025 16:18:38 INFO  [Epoch 100] Train Loss: 2.288492000056612
+Fri 10 Oct 2025 16:20:19 INFO  [Epoch 100] Val Results: OrderedDict([('ndcg@5', 0.03480219095945358), ('ndcg@10', 0.04469979181885719), ('ndcg@20', 0.055237188935279846), ('ndcg@50', 0.07055800408124924), ('recall@5', 0.053838931024074554), ('recall@10', 0.08446988463401794), ('recall@20', 0.1266377568244934), ('recall@50', 0.20440012216567993), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00036220543552190065)])
+Fri 10 Oct 2025 16:20:44 INFO  [Epoch 101] Train Loss: 2.284182795290817
+Fri 10 Oct 2025 16:21:10 INFO  [Epoch 102] Train Loss: 2.2801476679887287
+Fri 10 Oct 2025 16:22:51 INFO  [Epoch 102] Val Results: OrderedDict([('ndcg@5', 0.03608478978276253), ('ndcg@10', 0.0458969846367836), ('ndcg@20', 0.05615679919719696), ('ndcg@50', 0.07154399901628494), ('recall@5', 0.05701381713151932), ('recall@10', 0.08755533397197723), ('recall@20', 0.1284264177083969), ('recall@50', 0.2065018117427826), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00022805524349678308)])
+Fri 10 Oct 2025 16:22:51 INFO  [Epoch 102] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:23:16 INFO  [Epoch 103] Train Loss: 2.2745379511020527
+Fri 10 Oct 2025 16:23:42 INFO  [Epoch 104] Train Loss: 2.271693437015964
+Fri 10 Oct 2025 16:25:23 INFO  [Epoch 104] Val Results: OrderedDict([('ndcg@5', 0.03640299662947655), ('ndcg@10', 0.04611499607563019), ('ndcg@20', 0.055996108800172806), ('ndcg@50', 0.07101688534021378), ('recall@5', 0.05674551799893379), ('recall@10', 0.0869293063879013), ('recall@20', 0.1262800097465515), ('recall@50', 0.20243258774280548), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00019585923291742802)])
+Fri 10 Oct 2025 16:25:23 INFO  [Epoch 104] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:25:49 INFO  [Epoch 105] Train Loss: 2.266076212727142
+Fri 10 Oct 2025 16:26:14 INFO  [Epoch 106] Train Loss: 2.2616049635735003
+Fri 10 Oct 2025 16:27:57 INFO  [Epoch 106] Val Results: OrderedDict([('ndcg@5', 0.03614353761076927), ('ndcg@10', 0.04625998064875603), ('ndcg@20', 0.05644629895687103), ('ndcg@50', 0.07249113917350769), ('recall@5', 0.05567231401801109), ('recall@10', 0.08710817247629166), ('recall@20', 0.12753207981586456), ('recall@50', 0.208782359957695), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00016098016931209713)])
+Fri 10 Oct 2025 16:27:57 INFO  [Epoch 106] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:28:23 INFO  [Epoch 107] Train Loss: 2.2554525721397845
+Fri 10 Oct 2025 16:28:48 INFO  [Epoch 108] Train Loss: 2.2535209799555025
+Fri 10 Oct 2025 16:30:29 INFO  [Epoch 108] Val Results: OrderedDict([('ndcg@5', 0.036814816296100616), ('ndcg@10', 0.04649011418223381), ('ndcg@20', 0.05665662884712219), ('ndcg@50', 0.0716215968132019), ('recall@5', 0.05683495104312897), ('recall@10', 0.08706345409154892), ('recall@20', 0.12739793956279755), ('recall@50', 0.2030586302280426), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00021285157708916813)])
+Fri 10 Oct 2025 16:30:30 INFO  [Epoch 108] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:30:55 INFO  [Epoch 109] Train Loss: 2.2478105131290302
+Fri 10 Oct 2025 16:31:21 INFO  [Epoch 110] Train Loss: 2.245005156279538
+Fri 10 Oct 2025 16:33:02 INFO  [Epoch 110] Val Results: OrderedDict([('ndcg@5', 0.037706926465034485), ('ndcg@10', 0.04683227464556694), ('ndcg@20', 0.05737349018454552), ('ndcg@50', 0.07278289645910263), ('recall@5', 0.057595133781433105), ('recall@10', 0.08590082079172134), ('recall@20', 0.12780039012432098), ('recall@50', 0.20583106577396393), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0003371640632394701)])
+Fri 10 Oct 2025 16:33:02 INFO  [Epoch 110] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:33:27 INFO  [Epoch 111] Train Loss: 2.2396771597027314
+Fri 10 Oct 2025 16:33:53 INFO  [Epoch 112] Train Loss: 2.2349435656914913
+Fri 10 Oct 2025 16:35:34 INFO  [Epoch 112] Val Results: OrderedDict([('ndcg@5', 0.036973051726818085), ('ndcg@10', 0.04706428200006485), ('ndcg@20', 0.05720553547143936), ('ndcg@50', 0.07293425500392914), ('recall@5', 0.05714796856045723), ('recall@10', 0.08853910118341446), ('recall@20', 0.1287841498851776), ('recall@50', 0.20833519101142883), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002647229703143239)])
+Fri 10 Oct 2025 16:35:34 INFO  [Epoch 112] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:35:59 INFO  [Epoch 113] Train Loss: 2.230305469917416
+Fri 10 Oct 2025 16:36:25 INFO  [Epoch 114] Train Loss: 2.225875428214611
+Fri 10 Oct 2025 16:38:06 INFO  [Epoch 114] Val Results: OrderedDict([('ndcg@5', 0.037166040390729904), ('ndcg@10', 0.047689907252788544), ('ndcg@20', 0.058087773621082306), ('ndcg@50', 0.07324603199958801), ('recall@5', 0.05750570073723793), ('recall@10', 0.09032777696847916), ('recall@20', 0.1316460222005844), ('recall@50', 0.208648219704628), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0001887045509647578)])
+Fri 10 Oct 2025 16:38:06 INFO  [Epoch 114] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:38:31 INFO  [Epoch 115] Train Loss: 2.2220366771119116
+Fri 10 Oct 2025 16:38:57 INFO  [Epoch 116] Train Loss: 2.2175822012155435
+Fri 10 Oct 2025 16:40:38 INFO  [Epoch 116] Val Results: OrderedDict([('ndcg@5', 0.03578316792845726), ('ndcg@10', 0.045761339366436005), ('ndcg@20', 0.05642151087522507), ('ndcg@50', 0.07178302109241486), ('recall@5', 0.05531458184123039), ('recall@10', 0.08630327135324478), ('recall@20', 0.12887358665466309), ('recall@50', 0.20668068528175354), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00015382550191134214)])
+Fri 10 Oct 2025 16:41:03 INFO  [Epoch 117] Train Loss: 2.2127588194168033
+Fri 10 Oct 2025 16:41:29 INFO  [Epoch 118] Train Loss: 2.210213439473846
+Fri 10 Oct 2025 16:43:10 INFO  [Epoch 118] Val Results: OrderedDict([('ndcg@5', 0.037301987409591675), ('ndcg@10', 0.04761802405118942), ('ndcg@20', 0.058001309633255005), ('ndcg@50', 0.07323423027992249), ('recall@5', 0.05781871825456619), ('recall@10', 0.08997003734111786), ('recall@20', 0.13119885325431824), ('recall@50', 0.208648219704628), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018244421517010778)])
+Fri 10 Oct 2025 16:43:35 INFO  [Epoch 119] Train Loss: 2.2045416484083185
+Fri 10 Oct 2025 16:44:01 INFO  [Epoch 120] Train Loss: 2.200470097797854
+Fri 10 Oct 2025 16:45:42 INFO  [Epoch 120] Val Results: OrderedDict([('ndcg@5', 0.037160418927669525), ('ndcg@10', 0.0470249317586422), ('ndcg@20', 0.05799998342990875), ('ndcg@50', 0.07307960093021393), ('recall@5', 0.05692438408732414), ('recall@10', 0.08737646788358688), ('recall@20', 0.13101999461650848), ('recall@50', 0.20744086802005768), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002343155792914331)])
+Fri 10 Oct 2025 16:46:07 INFO  [Epoch 121] Train Loss: 2.19595794965321
+Fri 10 Oct 2025 16:46:33 INFO  [Epoch 122] Train Loss: 2.19139802548672
+Fri 10 Oct 2025 16:48:14 INFO  [Epoch 122] Val Results: OrderedDict([('ndcg@5', 0.03690796718001366), ('ndcg@10', 0.04641333594918251), ('ndcg@20', 0.05704081058502197), ('ndcg@50', 0.07191524654626846), ('recall@5', 0.05683495104312897), ('recall@10', 0.08652685582637787), ('recall@20', 0.12882886826992035), ('recall@50', 0.2039976716041565), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00021821758127771318)])
+Fri 10 Oct 2025 16:48:39 INFO  [Epoch 123] Train Loss: 2.1881983725477285
+Fri 10 Oct 2025 16:49:05 INFO  [Epoch 124] Train Loss: 2.1834584576610463
+Fri 10 Oct 2025 16:50:46 INFO  [Epoch 124] Val Results: OrderedDict([('ndcg@5', 0.03812903165817261), ('ndcg@10', 0.047593504190444946), ('ndcg@20', 0.058387335389852524), ('ndcg@50', 0.07300535589456558), ('recall@5', 0.05857890099287033), ('recall@10', 0.08818136900663376), ('recall@20', 0.13101999461650848), ('recall@50', 0.2050708830356598), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002137459086952731)])
+Fri 10 Oct 2025 16:51:12 INFO  [Epoch 125] Train Loss: 2.1787796693089407
+Fri 10 Oct 2025 16:51:38 INFO  [Epoch 126] Train Loss: 2.1741262632585223
+Fri 10 Oct 2025 16:53:19 INFO  [Epoch 126] Val Results: OrderedDict([('ndcg@5', 0.039183106273412704), ('ndcg@10', 0.04932430386543274), ('ndcg@20', 0.05947035551071167), ('ndcg@50', 0.07461902499198914), ('recall@5', 0.06054643914103508), ('recall@10', 0.09207172691822052), ('recall@20', 0.13240620493888855), ('recall@50', 0.20918481051921844), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0001636631932342425)])
+Fri 10 Oct 2025 16:53:19 INFO  [Epoch 126] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 16:53:45 INFO  [Epoch 127] Train Loss: 2.170038718657735
+Fri 10 Oct 2025 16:54:10 INFO  [Epoch 128] Train Loss: 2.1659970659226295
+Fri 10 Oct 2025 16:55:51 INFO  [Epoch 128] Val Results: OrderedDict([('ndcg@5', 0.03779900074005127), ('ndcg@10', 0.04733330383896828), ('ndcg@20', 0.05802644044160843), ('ndcg@50', 0.073224276304245), ('recall@5', 0.058489467948675156), ('recall@10', 0.08818136900663376), ('recall@20', 0.1307964026927948), ('recall@50', 0.20784331858158112), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000236998574109748)])
+Fri 10 Oct 2025 16:56:17 INFO  [Epoch 129] Train Loss: 2.1619348781118135
+Fri 10 Oct 2025 16:56:42 INFO  [Epoch 130] Train Loss: 2.1583464883180907
+Fri 10 Oct 2025 16:58:24 INFO  [Epoch 130] Val Results: OrderedDict([('ndcg@5', 0.03820265829563141), ('ndcg@10', 0.04832536354660988), ('ndcg@20', 0.05919770896434784), ('ndcg@50', 0.07408186048269272), ('recall@5', 0.05853418633341789), ('recall@10', 0.08983588963747025), ('recall@20', 0.13307695090770721), ('recall@50', 0.20855878293514252), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00015740285743959248)])
+Fri 10 Oct 2025 16:58:49 INFO  [Epoch 131] Train Loss: 2.1530417932146717
+Fri 10 Oct 2025 16:59:15 INFO  [Epoch 132] Train Loss: 2.148690486464519
+Fri 10 Oct 2025 17:00:56 INFO  [Epoch 132] Val Results: OrderedDict([('ndcg@5', 0.03798716142773628), ('ndcg@10', 0.04804617911577225), ('ndcg@20', 0.058929942548274994), ('ndcg@50', 0.0735357254743576), ('recall@5', 0.05701381713151932), ('recall@10', 0.08831552416086197), ('recall@20', 0.1316460222005844), ('recall@50', 0.20569691061973572), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0001815498835640028)])
+Fri 10 Oct 2025 17:01:22 INFO  [Epoch 133] Train Loss: 2.145954399489243
+Fri 10 Oct 2025 17:01:48 INFO  [Epoch 134] Train Loss: 2.1407576662557135
+Fri 10 Oct 2025 17:03:29 INFO  [Epoch 134] Val Results: OrderedDict([('ndcg@5', 0.03823872283101082), ('ndcg@10', 0.04824056848883629), ('ndcg@20', 0.05897216498851776), ('ndcg@50', 0.07363010942935944), ('recall@5', 0.058668337762355804), ('recall@10', 0.08988060802221298), ('recall@20', 0.1323614865541458), ('recall@50', 0.20659124851226807), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002566739567555487)])
+Fri 10 Oct 2025 17:03:54 INFO  [Epoch 135] Train Loss: 2.1359913256381735
+Fri 10 Oct 2025 17:04:20 INFO  [Epoch 136] Train Loss: 2.130092619689986
+Fri 10 Oct 2025 17:06:03 INFO  [Epoch 136] Val Results: OrderedDict([('ndcg@5', 0.038251664489507675), ('ndcg@10', 0.04875931516289711), ('ndcg@20', 0.058761902153491974), ('ndcg@50', 0.07381319254636765), ('recall@5', 0.058847203850746155), ('recall@10', 0.09153512865304947), ('recall@20', 0.1311541348695755), ('recall@50', 0.20748557150363922), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00020390821737237275)])
+Fri 10 Oct 2025 17:06:28 INFO  [Epoch 137] Train Loss: 2.1279906215370863
+Fri 10 Oct 2025 17:06:54 INFO  [Epoch 138] Train Loss: 2.124089761698756
+Fri 10 Oct 2025 17:08:35 INFO  [Epoch 138] Val Results: OrderedDict([('ndcg@5', 0.039435047656297684), ('ndcg@10', 0.049694500863552094), ('ndcg@20', 0.06033468246459961), ('ndcg@50', 0.07542072236537933), ('recall@5', 0.05983097106218338), ('recall@10', 0.09157983958721161), ('recall@20', 0.1337924301624298), ('recall@50', 0.21030272543430328), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00019675354997161776)])
+Fri 10 Oct 2025 17:08:35 INFO  [Epoch 138] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 17:09:01 INFO  [Epoch 139] Train Loss: 2.1193918040754265
+Fri 10 Oct 2025 17:09:27 INFO  [Epoch 140] Train Loss: 2.114955687569273
+Fri 10 Oct 2025 17:11:08 INFO  [Epoch 140] Val Results: OrderedDict([('ndcg@5', 0.039566900581121445), ('ndcg@10', 0.04930948466062546), ('ndcg@20', 0.060206931084394455), ('ndcg@50', 0.07494692504405975), ('recall@5', 0.060278136283159256), ('recall@10', 0.09064079076051712), ('recall@20', 0.13397128880023956), ('recall@50', 0.20882707834243774), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00017797252803575248)])
+Fri 10 Oct 2025 17:11:33 INFO  [Epoch 141] Train Loss: 2.1106114798018902
+Fri 10 Oct 2025 17:11:59 INFO  [Epoch 142] Train Loss: 2.105672722428689
+Fri 10 Oct 2025 17:13:41 INFO  [Epoch 142] Val Results: OrderedDict([('ndcg@5', 0.03833802416920662), ('ndcg@10', 0.04861336946487427), ('ndcg@20', 0.0585910901427269), ('ndcg@50', 0.07338409125804901), ('recall@5', 0.05875777080655098), ('recall@10', 0.09068550914525986), ('recall@20', 0.13039395213127136), ('recall@50', 0.2052050232887268), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018244421517010778)])
+Fri 10 Oct 2025 17:14:06 INFO  [Epoch 143] Train Loss: 2.102583188491109
+Fri 10 Oct 2025 17:14:32 INFO  [Epoch 144] Train Loss: 2.098572985439449
+Fri 10 Oct 2025 17:16:13 INFO  [Epoch 144] Val Results: OrderedDict([('ndcg@5', 0.039136387407779694), ('ndcg@10', 0.04951281100511551), ('ndcg@20', 0.06006293371319771), ('ndcg@50', 0.0749320536851883), ('recall@5', 0.059562671929597855), ('recall@10', 0.09184814244508743), ('recall@20', 0.1336582750082016), ('recall@50', 0.20905067026615143), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00019764788157772273)])
+Fri 10 Oct 2025 17:16:38 INFO  [Epoch 145] Train Loss: 2.094632854257576
+Fri 10 Oct 2025 17:17:04 INFO  [Epoch 146] Train Loss: 2.090155209316818
+Fri 10 Oct 2025 17:18:45 INFO  [Epoch 146] Val Results: OrderedDict([('ndcg@5', 0.038018371909856796), ('ndcg@10', 0.04838341847062111), ('ndcg@20', 0.058870818465948105), ('ndcg@50', 0.07365363091230392), ('recall@5', 0.058489467948675156), ('recall@10', 0.09064079076051712), ('recall@20', 0.13240620493888855), ('recall@50', 0.2073514312505722), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018781023391056806)])
+Fri 10 Oct 2025 17:19:11 INFO  [Epoch 147] Train Loss: 2.0859451915503477
+Fri 10 Oct 2025 17:19:37 INFO  [Epoch 148] Train Loss: 2.0806378450838974
+Fri 10 Oct 2025 17:21:18 INFO  [Epoch 148] Val Results: OrderedDict([('ndcg@5', 0.03956097364425659), ('ndcg@10', 0.0489678718149662), ('ndcg@20', 0.05930080637335777), ('ndcg@50', 0.07437033206224442), ('recall@5', 0.06085945665836334), ('recall@10', 0.09014890342950821), ('recall@20', 0.13124357163906097), ('recall@50', 0.20748557150363922), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00015650851128157228)])
+Fri 10 Oct 2025 17:21:44 INFO  [Epoch 149] Train Loss: 2.077126131215448
+Fri 10 Oct 2025 17:22:10 INFO  [Epoch 150] Train Loss: 2.0735925698094793
+Fri 10 Oct 2025 17:23:51 INFO  [Epoch 150] Val Results: OrderedDict([('ndcg@5', 0.03735171630978584), ('ndcg@10', 0.04760710522532463), ('ndcg@20', 0.05813722684979439), ('ndcg@50', 0.07301516085863113), ('recall@5', 0.05683495104312897), ('recall@10', 0.08849439024925232), ('recall@20', 0.13034923374652863), ('recall@50', 0.20574162900447845), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018959888257086277)])
+Fri 10 Oct 2025 17:24:16 INFO  [Epoch 151] Train Loss: 2.0722721374452346
+Fri 10 Oct 2025 17:24:42 INFO  [Epoch 152] Train Loss: 2.067844056433741
+Fri 10 Oct 2025 17:26:23 INFO  [Epoch 152] Val Results: OrderedDict([('ndcg@5', 0.03880855441093445), ('ndcg@10', 0.0487750880420208), ('ndcg@20', 0.05933941528201103), ('ndcg@50', 0.07431261241436005), ('recall@5', 0.059383802115917206), ('recall@10', 0.0903724879026413), ('recall@20', 0.13231676816940308), ('recall@50', 0.2080668956041336), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00020211956871207803)])
+Fri 10 Oct 2025 17:26:48 INFO  [Epoch 153] Train Loss: 2.0634817478721708
+Fri 10 Oct 2025 17:27:14 INFO  [Epoch 154] Train Loss: 2.05866980830983
+Fri 10 Oct 2025 17:28:57 INFO  [Epoch 154] Val Results: OrderedDict([('ndcg@5', 0.03933783248066902), ('ndcg@10', 0.048787519335746765), ('ndcg@20', 0.05950044095516205), ('ndcg@50', 0.07442299276590347), ('recall@5', 0.059204936027526855), ('recall@10', 0.0885838195681572), ('recall@20', 0.13119885325431824), ('recall@50', 0.20672538876533508), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00019943654478993267)])
+Fri 10 Oct 2025 17:29:23 INFO  [Epoch 155] Train Loss: 2.0552476649154485
+Fri 10 Oct 2025 17:29:49 INFO  [Epoch 156] Train Loss: 2.0519308338833224
+Fri 10 Oct 2025 17:31:30 INFO  [Epoch 156] Val Results: OrderedDict([('ndcg@5', 0.03950922563672066), ('ndcg@10', 0.0495808981359005), ('ndcg@20', 0.059662241488695145), ('ndcg@50', 0.0745445042848587), ('recall@5', 0.05969681963324547), ('recall@10', 0.09095380455255508), ('recall@20', 0.13106469810009003), ('recall@50', 0.20636765658855438), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00021016855316702276)])
+Fri 10 Oct 2025 17:31:55 INFO  [Epoch 157] Train Loss: 2.0471184882208533
+Fri 10 Oct 2025 17:32:21 INFO  [Epoch 158] Train Loss: 2.045018893039644
+Fri 10 Oct 2025 17:34:02 INFO  [Epoch 158] Val Results: OrderedDict([('ndcg@5', 0.03956169635057449), ('ndcg@10', 0.04946896806359291), ('ndcg@20', 0.059883903712034225), ('ndcg@50', 0.07462572306394577), ('recall@5', 0.06036757305264473), ('recall@10', 0.09104324132204056), ('recall@20', 0.13254036009311676), ('recall@50', 0.20726199448108673), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00020569690968841314)])
+Fri 10 Oct 2025 17:34:02 INFO  Early stopping at epoch 158
+Fri 10 Oct 2025 17:34:02 INFO  Best epoch: 138, Best val score: 0.049694500863552094
+Fri 10 Oct 2025 17:34:02 INFO  Loaded best model checkpoint from ckpt/genrec_default-main.py_--rand_seed=2026_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-10-2025_11-06-01-de4f84-.pth
+Fri 10 Oct 2025 17:35:45 INFO  Test Results: OrderedDict([('ndcg@5', 0.029046932235360146), ('ndcg@10', 0.03695973753929138), ('ndcg@20', 0.04554738104343414), ('ndcg@50', 0.05978415906429291), ('recall@5', 0.044716719537973404), ('recall@10', 0.0694003477692604), ('recall@20', 0.10356391966342926), ('recall@50', 0.1760944426059723), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00013683315773960203)])

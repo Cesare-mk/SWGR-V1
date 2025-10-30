@@ -1,0 +1,50 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
+num_proc: 1
+cache_dir: cache/       # Usually for raw and processed data
+log_dir: logs/
+tensorboard_log_dir: tensorboard/
+ckpt_dir: ckpt/
+run_id: genrec_default  # Change this to your customized run id
+rand_seed: 2026
+reproducibility: True
+
+train_batch_size: 256
+eval_batch_size: 64
+lr: 0.0015  # 从0.0021调整为0.0015，对冲Rank Loss的梯度放大效应（降低30%）
+weight_decay: 0.15  # 从0.1增加到0.15，加强正则化防止过拟合（增加50%）
+warmup_steps: 10000  # 从10000增加到15000，适应Rank Loss的梯度方差（增加50%）
+#gradient_accumulation_steps: 2  # 梯度累积，有效batch size = 128 × 2 = 256
+steps: ~
+epochs: 200
+max_grad_norm: 1.0      # None for no clipping, else a float value
+eval_interval: 2        # Evaluate every 3 epochs (faster training)
+patience: 30            # Early stopping. Adjusted for 3-epoch intervals (10*3=30 epochs equivalent)
+
+topk: [5,10,20,50]
+metrics: [ndcg,recall,err]
+val_metric: ndcg@10
+
+# DataLoader 加速配置
+num_workers: 4
+pin_memory: True
+persistent_workers: True
+prefetch_factor: 2
+
+# 关闭：null 或 false；开启：模式字符串，如 reduce-overhead \| default \| max-autotune
+#torch_compile: ~
+#torch_compile_fullgraph: false
+#torch_compile_dynamic: true

@@ -1,0 +1,431 @@
+Sat 18 Oct 2025 00:23:21 INFO  Device: cuda
+Sat 18 Oct 2025 00:23:21 INFO  [DATASET] Amazon Reviews 2014 for category: Beauty
+Sat 18 Oct 2025 00:23:21 INFO  [DATASET] Reviews have been processed...
+Sat 18 Oct 2025 00:23:21 INFO  [DATASET] Metadata has been processed...
+Sat 18 Oct 2025 00:23:21 INFO  [Dataset] AmazonReviews2014
+	Number of users: 22364
+	Number of items: 12102
+	Number of interactions: 198502
+	Average item sequence length: 8.875961366481846
+Sat 18 Oct 2025 00:23:22 INFO  Loading faiss.
+Sat 18 Oct 2025 00:23:22 INFO  Successfully loaded faiss.
+Sat 18 Oct 2025 00:23:22 INFO  [TOKENIZER] Loading item features from cache/AmazonReviews2014/Beauty/processed/item.sentence.feat...
+Sat 18 Oct 2025 00:23:22 INFO  [TOKENIZER] Loading pre-trained ActionPiece from cache/AmazonReviews2014/Beauty/processed/actionpiece.json...
+Sat 18 Oct 2025 00:24:03 INFO  ActionPiece(
+  (t5): T5ForConditionalGeneration(
+    (shared): Embedding(40002, 128)
+    (encoder): T5Stack(
+      (embed_tokens): Embedding(40002, 128)
+      (block): ModuleList(
+        (0): T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+                (relative_attention_bias): Embedding(32, 6)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerFF(
+              (DenseReluDense): T5DenseGatedActDense(
+                (wi_0): Linear(in_features=128, out_features=1024, bias=False)
+                (wi_1): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): NewGELUActivation()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+        (1-3): 3 x T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerFF(
+              (DenseReluDense): T5DenseGatedActDense(
+                (wi_0): Linear(in_features=128, out_features=1024, bias=False)
+                (wi_1): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): NewGELUActivation()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+      )
+      (final_layer_norm): T5LayerNorm()
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (decoder): T5Stack(
+      (embed_tokens): Embedding(40002, 128)
+      (block): ModuleList(
+        (0): T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+                (relative_attention_bias): Embedding(32, 6)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerCrossAttention(
+              (EncDecAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (2): T5LayerFF(
+              (DenseReluDense): T5DenseGatedActDense(
+                (wi_0): Linear(in_features=128, out_features=1024, bias=False)
+                (wi_1): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): NewGELUActivation()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+        (1-3): 3 x T5Block(
+          (layer): ModuleList(
+            (0): T5LayerSelfAttention(
+              (SelfAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (1): T5LayerCrossAttention(
+              (EncDecAttention): T5Attention(
+                (q): Linear(in_features=128, out_features=384, bias=False)
+                (k): Linear(in_features=128, out_features=384, bias=False)
+                (v): Linear(in_features=128, out_features=384, bias=False)
+                (o): Linear(in_features=384, out_features=128, bias=False)
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (2): T5LayerFF(
+              (DenseReluDense): T5DenseGatedActDense(
+                (wi_0): Linear(in_features=128, out_features=1024, bias=False)
+                (wi_1): Linear(in_features=128, out_features=1024, bias=False)
+                (wo): Linear(in_features=1024, out_features=128, bias=False)
+                (dropout): Dropout(p=0.1, inplace=False)
+                (act): NewGELUActivation()
+              )
+              (layer_norm): T5LayerNorm()
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+      )
+      (final_layer_norm): T5LayerNorm()
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (lm_head): Linear(in_features=128, out_features=40002, bias=False)
+  )
+)
+Sat 18 Oct 2025 00:24:03 INFO  #Embedding parameters: 5120256
+#Non-embedding parameters: 5508224
+#Total trainable parameters: 10628480
+
+Sat 18 Oct 2025 00:24:41 INFO  [Epoch 1] Train Loss: 8.67548299856223
+Sat 18 Oct 2025 00:25:18 INFO  [Epoch 2] Train Loss: 7.634760362164983
+Sat 18 Oct 2025 00:27:35 INFO  [Epoch 2] Val Results: OrderedDict([('ndcg@5', 0.0014348552795127034), ('ndcg@10', 0.0017181833973154426), ('ndcg@20', 0.0017181833973154426), ('ndcg@50', 0.0017181833973154426), ('recall@5', 0.002191119361668825), ('recall@10', 0.0030407370068132877), ('recall@20', 0.0030407370068132877), ('recall@50', 0.0030407370068132877), ('err@5', 0.0), ('err@10', 0.16122615337371826), ('err@20', 0.5800318121910095), ('err@50', 0.8320127129554749)])
+Sat 18 Oct 2025 00:27:35 INFO  [Epoch 2] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:28:12 INFO  [Epoch 3] Train Loss: 7.160828972604952
+Sat 18 Oct 2025 00:28:49 INFO  [Epoch 4] Train Loss: 6.699047565460205
+Sat 18 Oct 2025 00:31:13 INFO  [Epoch 4] Val Results: OrderedDict([('ndcg@5', 0.001416761428117752), ('ndcg@10', 0.0018981595057994127), ('ndcg@20', 0.0035838428884744644), ('ndcg@50', 0.004499278496950865), ('recall@5', 0.0021016858518123627), ('recall@10', 0.0036220543552190065), ('recall@20', 0.010374278761446476), ('recall@50', 0.014622366987168789), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.38423919677734375)])
+Sat 18 Oct 2025 00:31:13 INFO  [Epoch 4] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:31:50 INFO  [Epoch 5] Train Loss: 6.245981949312678
+Sat 18 Oct 2025 00:32:27 INFO  [Epoch 6] Train Loss: 5.7858573852346105
+Sat 18 Oct 2025 00:34:52 INFO  [Epoch 6] Val Results: OrderedDict([('ndcg@5', 0.005268082022666931), ('ndcg@10', 0.007702466566115618), ('ndcg@20', 0.009718614630401134), ('ndcg@50', 0.011352370493113995), ('recall@5', 0.008272592909634113), ('recall@10', 0.015829719603061676), ('recall@20', 0.023789294064044952), ('recall@50', 0.03174887225031853), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.27076151967048645)])
+Sat 18 Oct 2025 00:34:52 INFO  [Epoch 6] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:35:29 INFO  [Epoch 7] Train Loss: 5.326617947812211
+Sat 18 Oct 2025 00:36:07 INFO  [Epoch 8] Train Loss: 4.904340255121313
+Sat 18 Oct 2025 00:38:34 INFO  [Epoch 8] Val Results: OrderedDict([('ndcg@5', 0.00859326496720314), ('ndcg@10', 0.011258118785917759), ('ndcg@20', 0.013988395221531391), ('ndcg@50', 0.01772787608206272), ('recall@5', 0.014309350401163101), ('recall@10', 0.022626660764217377), ('recall@20', 0.0336269736289978), ('recall@50', 0.052407994866371155), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.058905333280563354)])
+Sat 18 Oct 2025 00:38:34 INFO  [Epoch 8] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:39:12 INFO  [Epoch 9] Train Loss: 4.523185685450929
+Sat 18 Oct 2025 00:39:49 INFO  [Epoch 10] Train Loss: 4.203264560217059
+Sat 18 Oct 2025 00:42:17 INFO  [Epoch 10] Val Results: OrderedDict([('ndcg@5', 0.007557743228971958), ('ndcg@10', 0.011086401529610157), ('ndcg@20', 0.014854331500828266), ('ndcg@50', 0.01956787146627903), ('recall@5', 0.012923131696879864), ('recall@10', 0.024057595059275627), ('recall@20', 0.038948263972997665), ('recall@50', 0.06264812499284744), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.01888476498425007)])
+Sat 18 Oct 2025 00:42:55 INFO  [Epoch 11] Train Loss: 3.9440310859494634
+Sat 18 Oct 2025 00:43:32 INFO  [Epoch 12] Train Loss: 3.7366511807831344
+Sat 18 Oct 2025 00:46:00 INFO  [Epoch 12] Val Results: OrderedDict([('ndcg@5', 0.008686777204275131), ('ndcg@10', 0.01276975404471159), ('ndcg@20', 0.01666046306490898), ('ndcg@50', 0.023335281759500504), ('recall@5', 0.014890667982399464), ('recall@10', 0.027500782161951065), ('recall@20', 0.043062202632427216), ('recall@50', 0.07695747166872025), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.018256045877933502)])
+Sat 18 Oct 2025 00:46:00 INFO  [Epoch 12] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:46:37 INFO  [Epoch 13] Train Loss: 3.5749958999425986
+Sat 18 Oct 2025 00:47:14 INFO  [Epoch 14] Train Loss: 3.445810448334839
+Sat 18 Oct 2025 00:49:42 INFO  [Epoch 14] Val Results: OrderedDict([('ndcg@5', 0.009969543665647507), ('ndcg@10', 0.013505479320883751), ('ndcg@20', 0.017765408381819725), ('ndcg@50', 0.024790121242403984), ('recall@5', 0.0168134868144989), ('recall@10', 0.027724366635084152), ('recall@20', 0.04458256810903549), ('recall@50', 0.0803559422492981), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.01723918877542019)])
+Sat 18 Oct 2025 00:49:42 INFO  [Epoch 14] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:50:20 INFO  [Epoch 15] Train Loss: 3.34929412441031
+Sat 18 Oct 2025 00:50:57 INFO  [Epoch 16] Train Loss: 3.2715839277445573
+Sat 18 Oct 2025 00:53:25 INFO  [Epoch 16] Val Results: OrderedDict([('ndcg@5', 0.011294086463749409), ('ndcg@10', 0.01565202884376049), ('ndcg@20', 0.019975651055574417), ('ndcg@50', 0.028529128059744835), ('recall@5', 0.01895988918840885), ('recall@10', 0.03273263946175575), ('recall@20', 0.04999329149723053), ('recall@50', 0.0932343602180481), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.01923266239464283)])
+Sat 18 Oct 2025 00:53:25 INFO  [Epoch 16] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:54:03 INFO  [Epoch 17] Train Loss: 3.205947236792123
+Sat 18 Oct 2025 00:54:40 INFO  [Epoch 18] Train Loss: 3.149282352933624
+Sat 18 Oct 2025 00:57:08 INFO  [Epoch 18] Val Results: OrderedDict([('ndcg@5', 0.013295721262693405), ('ndcg@10', 0.01785000041127205), ('ndcg@20', 0.02294367365539074), ('ndcg@50', 0.032362524420022964), ('recall@5', 0.022447792813181877), ('recall@10', 0.036667708307504654), ('recall@20', 0.05692438408732414), ('recall@50', 0.10477127134799957), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00024504761677235365)])
+Sat 18 Oct 2025 00:57:08 INFO  [Epoch 18] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 00:57:46 INFO  [Epoch 19] Train Loss: 3.1002171925533606
+Sat 18 Oct 2025 00:58:23 INFO  [Epoch 20] Train Loss: 3.0551972444883115
+Sat 18 Oct 2025 01:00:51 INFO  [Epoch 20] Val Results: OrderedDict([('ndcg@5', 0.014403792098164558), ('ndcg@10', 0.019904637709259987), ('ndcg@20', 0.026107460260391235), ('ndcg@50', 0.03580298274755478), ('recall@5', 0.02204534225165844), ('recall@10', 0.03944014757871628), ('recall@20', 0.06416849046945572), ('recall@50', 0.11331216990947723), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00171622761990875)])
+Sat 18 Oct 2025 01:00:51 INFO  [Epoch 20] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:01:28 INFO  [Epoch 21] Train Loss: 3.0077425004907155
+Sat 18 Oct 2025 01:02:06 INFO  [Epoch 22] Train Loss: 2.9721773278388532
+Sat 18 Oct 2025 01:04:34 INFO  [Epoch 22] Val Results: OrderedDict([('ndcg@5', 0.01538090966641903), ('ndcg@10', 0.020865486934781075), ('ndcg@20', 0.02702386863529682), ('ndcg@50', 0.037323880940675735), ('recall@5', 0.025309663265943527), ('recall@10', 0.04230201616883278), ('recall@20', 0.06671734899282455), ('recall@50', 0.11885704100131989), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0007583955302834511)])
+Sat 18 Oct 2025 01:04:34 INFO  [Epoch 22] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:05:11 INFO  [Epoch 23] Train Loss: 2.9398042909829996
+Sat 18 Oct 2025 01:05:48 INFO  [Epoch 24] Train Loss: 2.917112766536757
+Sat 18 Oct 2025 01:08:16 INFO  [Epoch 24] Val Results: OrderedDict([('ndcg@5', 0.017517749220132828), ('ndcg@10', 0.02350321039557457), ('ndcg@20', 0.030283672735095024), ('ndcg@50', 0.04028010740876198), ('recall@5', 0.027813799679279327), ('recall@10', 0.046460673213005066), ('recall@20', 0.07346957176923752), ('recall@50', 0.12386531382799149), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00580959627404809)])
+Sat 18 Oct 2025 01:08:16 INFO  [Epoch 24] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:08:54 INFO  [Epoch 25] Train Loss: 2.8941127284491572
+Sat 18 Oct 2025 01:09:31 INFO  [Epoch 26] Train Loss: 2.8762410067398725
+Sat 18 Oct 2025 01:11:59 INFO  [Epoch 26] Val Results: OrderedDict([('ndcg@5', 0.017990004271268845), ('ndcg@10', 0.02440587431192398), ('ndcg@20', 0.03162265196442604), ('ndcg@50', 0.04231269657611847), ('recall@5', 0.029691901057958603), ('recall@10', 0.049546126276254654), ('recall@20', 0.0782095417380333), ('recall@50', 0.13227204978466034), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0025604793336242437)])
+Sat 18 Oct 2025 01:11:59 INFO  [Epoch 26] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:12:36 INFO  [Epoch 27] Train Loss: 2.856288369527587
+Sat 18 Oct 2025 01:13:14 INFO  [Epoch 28] Train Loss: 2.838824913195599
+Sat 18 Oct 2025 01:15:42 INFO  [Epoch 28] Val Results: OrderedDict([('ndcg@5', 0.021199753507971764), ('ndcg@10', 0.027329808101058006), ('ndcg@20', 0.035360366106033325), ('ndcg@50', 0.045957423746585846), ('recall@5', 0.033939991146326065), ('recall@10', 0.05321289598941803), ('recall@20', 0.08514063060283661), ('recall@50', 0.13862183690071106), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.015789473429322243)])
+Sat 18 Oct 2025 01:15:42 INFO  [Epoch 28] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:16:19 INFO  [Epoch 29] Train Loss: 2.8213928747733745
+Sat 18 Oct 2025 01:16:56 INFO  [Epoch 30] Train Loss: 2.8018666106903134
+Sat 18 Oct 2025 01:19:25 INFO  [Epoch 30] Val Results: OrderedDict([('ndcg@5', 0.022219039499759674), ('ndcg@10', 0.02942834421992302), ('ndcg@20', 0.03735901415348053), ('ndcg@50', 0.04920686408877373), ('recall@5', 0.03496847301721573), ('recall@10', 0.05746098607778549), ('recall@20', 0.08898627012968063), ('recall@50', 0.14908553659915924), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0021839644759893417)])
+Sat 18 Oct 2025 01:19:25 INFO  [Epoch 30] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:20:02 INFO  [Epoch 31] Train Loss: 2.7857158671093356
+Sat 18 Oct 2025 01:20:39 INFO  [Epoch 32] Train Loss: 2.770299116925043
+Sat 18 Oct 2025 01:23:07 INFO  [Epoch 32] Val Results: OrderedDict([('ndcg@5', 0.023960134014487267), ('ndcg@10', 0.031073791906237602), ('ndcg@20', 0.039462100714445114), ('ndcg@50', 0.05135185271501541), ('recall@5', 0.0386352464556694), ('recall@10', 0.06077002361416817), ('recall@20', 0.09421812742948532), ('recall@50', 0.15436211228370667), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0070285736583173275)])
+Sat 18 Oct 2025 01:23:07 INFO  [Epoch 32] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:23:44 INFO  [Epoch 33] Train Loss: 2.7572788756181295
+Sat 18 Oct 2025 01:24:22 INFO  [Epoch 34] Train Loss: 2.742773967958146
+Sat 18 Oct 2025 01:26:50 INFO  [Epoch 34] Val Results: OrderedDict([('ndcg@5', 0.025807064026594162), ('ndcg@10', 0.03330668434500694), ('ndcg@20', 0.04231468588113785), ('ndcg@50', 0.054467540234327316), ('recall@5', 0.040558066219091415), ('recall@10', 0.06385547667741776), ('recall@20', 0.09971828758716583), ('recall@50', 0.1610696166753769), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.005494790617376566)])
+Sat 18 Oct 2025 01:26:50 INFO  [Epoch 34] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:27:27 INFO  [Epoch 35] Train Loss: 2.7308885847084254
+Sat 18 Oct 2025 01:28:04 INFO  [Epoch 36] Train Loss: 2.716049243503971
+Sat 18 Oct 2025 01:30:32 INFO  [Epoch 36] Val Results: OrderedDict([('ndcg@5', 0.025984395295381546), ('ndcg@10', 0.03413722664117813), ('ndcg@20', 0.04369098320603371), ('ndcg@50', 0.05596720427274704), ('recall@5', 0.04104994982481003), ('recall@10', 0.06644904613494873), ('recall@20', 0.10445825755596161), ('recall@50', 0.1664356291294098), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 1.1179179637110792e-05), ('err@50', 0.007848679088056087)])
+Sat 18 Oct 2025 01:30:32 INFO  [Epoch 36] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:31:10 INFO  [Epoch 37] Train Loss: 2.70104767979351
+Sat 18 Oct 2025 01:31:47 INFO  [Epoch 38] Train Loss: 2.691469771852753
+Sat 18 Oct 2025 01:34:15 INFO  [Epoch 38] Val Results: OrderedDict([('ndcg@5', 0.028597215190529823), ('ndcg@10', 0.03727889433503151), ('ndcg@20', 0.04627849534153938), ('ndcg@50', 0.05939155071973801), ('recall@5', 0.045074451714754105), ('recall@10', 0.07217278331518173), ('recall@20', 0.10803559422492981), ('recall@50', 0.17448464035987854), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 8.943344255385455e-06), ('err@50', 0.00047936319606378675)])
+Sat 18 Oct 2025 01:34:15 INFO  [Epoch 38] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:34:52 INFO  [Epoch 39] Train Loss: 2.6793129601831103
+Sat 18 Oct 2025 01:35:30 INFO  [Epoch 40] Train Loss: 2.666320917207443
+Sat 18 Oct 2025 01:37:58 INFO  [Epoch 40] Val Results: OrderedDict([('ndcg@5', 0.027980204671621323), ('ndcg@10', 0.03693580627441406), ('ndcg@20', 0.0467522032558918), ('ndcg@50', 0.06061829626560211), ('recall@5', 0.044180117547512054), ('recall@10', 0.07194919884204865), ('recall@20', 0.11094218492507935), ('recall@50', 0.18105800449848175), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0001100031440728344)])
+Sat 18 Oct 2025 01:38:35 INFO  [Epoch 41] Train Loss: 2.654670885564752
+Sat 18 Oct 2025 01:39:12 INFO  [Epoch 42] Train Loss: 2.644832240004484
+Sat 18 Oct 2025 01:41:40 INFO  [Epoch 42] Val Results: OrderedDict([('ndcg@5', 0.0292084701359272), ('ndcg@10', 0.0378054603934288), ('ndcg@20', 0.04829315096139908), ('ndcg@50', 0.06205923110246658), ('recall@5', 0.04623708873987198), ('recall@10', 0.07306712120771408), ('recall@20', 0.11474310606718063), ('recall@50', 0.18436703085899353), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 8.406743290834129e-05)])
+Sat 18 Oct 2025 01:41:40 INFO  [Epoch 42] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:42:18 INFO  [Epoch 43] Train Loss: 2.634758121772499
+Sat 18 Oct 2025 01:42:55 INFO  [Epoch 44] Train Loss: 2.624997198349771
+Sat 18 Oct 2025 01:45:23 INFO  [Epoch 44] Val Results: OrderedDict([('ndcg@5', 0.03121189959347248), ('ndcg@10', 0.04036802053451538), ('ndcg@20', 0.050677794963121414), ('ndcg@50', 0.06474945694208145), ('recall@5', 0.049367260187864304), ('recall@10', 0.07789652794599533), ('recall@20', 0.11890175938606262), ('recall@50', 0.19013549387454987), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 9.569376561557874e-05)])
+Sat 18 Oct 2025 01:45:23 INFO  [Epoch 44] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:46:00 INFO  [Epoch 45] Train Loss: 2.6161284998697067
+Sat 18 Oct 2025 01:46:38 INFO  [Epoch 46] Train Loss: 2.6049441437776912
+Sat 18 Oct 2025 01:49:06 INFO  [Epoch 46] Val Results: OrderedDict([('ndcg@5', 0.03400544822216034), ('ndcg@10', 0.043055761605501175), ('ndcg@20', 0.053037259727716446), ('ndcg@50', 0.06672898679971695), ('recall@5', 0.05321289598941803), ('recall@10', 0.08138442784547806), ('recall@20', 0.12127174437046051), ('recall@50', 0.1905379444360733), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00012520680320449173)])
+Sat 18 Oct 2025 01:49:06 INFO  [Epoch 46] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:49:43 INFO  [Epoch 47] Train Loss: 2.5983381085822552
+Sat 18 Oct 2025 01:50:20 INFO  [Epoch 48] Train Loss: 2.5885263463402537
+Sat 18 Oct 2025 01:52:49 INFO  [Epoch 48] Val Results: OrderedDict([('ndcg@5', 0.03341500461101532), ('ndcg@10', 0.042975425720214844), ('ndcg@20', 0.05328352376818657), ('ndcg@50', 0.06649547815322876), ('recall@5', 0.05374949797987938), ('recall@10', 0.0835755467414856), ('recall@20', 0.12484908103942871), ('recall@50', 0.19152170419692993), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 5.276572846923955e-05)])
+Sat 18 Oct 2025 01:53:26 INFO  [Epoch 49] Train Loss: 2.5815065449777745
+Sat 18 Oct 2025 01:54:03 INFO  [Epoch 50] Train Loss: 2.5734099029103144
+Sat 18 Oct 2025 01:56:31 INFO  [Epoch 50] Val Results: OrderedDict([('ndcg@5', 0.034387461841106415), ('ndcg@10', 0.044238220900297165), ('ndcg@20', 0.05467425659298897), ('ndcg@50', 0.06827253103256226), ('recall@5', 0.05325761437416077), ('recall@10', 0.08397799730300903), ('recall@20', 0.12569870054721832), ('recall@50', 0.194338858127594), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 7.065241516102105e-05)])
+Sat 18 Oct 2025 01:56:31 INFO  [Epoch 50] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 01:57:08 INFO  [Epoch 51] Train Loss: 2.5644664207785044
+Sat 18 Oct 2025 01:57:46 INFO  [Epoch 52] Train Loss: 2.558656532012999
+Sat 18 Oct 2025 02:00:14 INFO  [Epoch 52] Val Results: OrderedDict([('ndcg@5', 0.0354207307100296), ('ndcg@10', 0.04507048428058624), ('ndcg@20', 0.05591170862317085), ('ndcg@50', 0.06951399892568588), ('recall@5', 0.05468854680657387), ('recall@10', 0.08455931395292282), ('recall@20', 0.12762151658535004), ('recall@50', 0.19630639255046844), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00011715778964571655)])
+Sat 18 Oct 2025 02:00:14 INFO  [Epoch 52] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:00:51 INFO  [Epoch 53] Train Loss: 2.5513944922718093
+Sat 18 Oct 2025 02:01:28 INFO  [Epoch 54] Train Loss: 2.543101670677096
+Sat 18 Oct 2025 02:03:56 INFO  [Epoch 54] Val Results: OrderedDict([('ndcg@5', 0.03562892973423004), ('ndcg@10', 0.045425307005643845), ('ndcg@20', 0.05597454309463501), ('ndcg@50', 0.06976588815450668), ('recall@5', 0.05567231401801109), ('recall@10', 0.08612440526485443), ('recall@20', 0.12811340391635895), ('recall@50', 0.19787149131298065), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00029691902454942465)])
+Sat 18 Oct 2025 02:03:57 INFO  [Epoch 54] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:04:34 INFO  [Epoch 55] Train Loss: 2.536327481733686
+Sat 18 Oct 2025 02:05:11 INFO  [Epoch 56] Train Loss: 2.531084909513303
+Sat 18 Oct 2025 02:07:39 INFO  [Epoch 56] Val Results: OrderedDict([('ndcg@5', 0.037549301981925964), ('ndcg@10', 0.04747587442398071), ('ndcg@20', 0.0579708069562912), ('ndcg@50', 0.0716777965426445), ('recall@5', 0.05817645043134689), ('recall@10', 0.08916513621807098), ('recall@20', 0.130930557847023), ('recall@50', 0.2001967579126358), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0001708178606349975)])
+Sat 18 Oct 2025 02:07:39 INFO  [Epoch 56] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:08:17 INFO  [Epoch 57] Train Loss: 2.5248367262257676
+Sat 18 Oct 2025 02:08:54 INFO  [Epoch 58] Train Loss: 2.519340422830693
+Sat 18 Oct 2025 02:11:22 INFO  [Epoch 58] Val Results: OrderedDict([('ndcg@5', 0.03712637722492218), ('ndcg@10', 0.04665001854300499), ('ndcg@20', 0.0572800375521183), ('ndcg@50', 0.07142902165651321), ('recall@5', 0.05607476457953453), ('recall@10', 0.08585610240697861), ('recall@20', 0.127934530377388), ('recall@50', 0.19957071542739868), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0004954612231813371)])
+Sat 18 Oct 2025 02:11:59 INFO  [Epoch 59] Train Loss: 2.510211265504592
+Sat 18 Oct 2025 02:12:37 INFO  [Epoch 60] Train Loss: 2.5033989829312038
+Sat 18 Oct 2025 02:15:05 INFO  [Epoch 60] Val Results: OrderedDict([('ndcg@5', 0.037560105323791504), ('ndcg@10', 0.047177039086818695), ('ndcg@20', 0.05781958997249603), ('ndcg@50', 0.0721682757139206), ('recall@5', 0.05799758434295654), ('recall@10', 0.08809193968772888), ('recall@20', 0.13039395213127136), ('recall@50', 0.20287975668907166), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0002665116626303643)])
+Sat 18 Oct 2025 02:15:42 INFO  [Epoch 61] Train Loss: 2.4986058965267373
+Sat 18 Oct 2025 02:16:20 INFO  [Epoch 62] Train Loss: 2.491488616754109
+Sat 18 Oct 2025 02:18:48 INFO  [Epoch 62] Val Results: OrderedDict([('ndcg@5', 0.03711099550127983), ('ndcg@10', 0.047507233917713165), ('ndcg@20', 0.057322870939970016), ('ndcg@50', 0.0719231367111206), ('recall@5', 0.05683495104312897), ('recall@10', 0.08912042528390884), ('recall@20', 0.1282922625541687), ('recall@50', 0.2019854187965393), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00029065864509902894)])
+Sat 18 Oct 2025 02:18:48 INFO  [Epoch 62] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:19:25 INFO  [Epoch 63] Train Loss: 2.4852877289404667
+Sat 18 Oct 2025 02:20:03 INFO  [Epoch 64] Train Loss: 2.4802123952932393
+Sat 18 Oct 2025 02:22:31 INFO  [Epoch 64] Val Results: OrderedDict([('ndcg@5', 0.03879857063293457), ('ndcg@10', 0.0490461066365242), ('ndcg@20', 0.05920808017253876), ('ndcg@50', 0.07391698658466339), ('recall@5', 0.05853418633341789), ('recall@10', 0.09032777696847916), ('recall@20', 0.1305728256702423), ('recall@50', 0.20457899570465088), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000223583570914343)])
+Sat 18 Oct 2025 02:22:31 INFO  [Epoch 64] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:23:08 INFO  [Epoch 65] Train Loss: 2.474746560308256
+Sat 18 Oct 2025 02:23:46 INFO  [Epoch 66] Train Loss: 2.469775551951813
+Sat 18 Oct 2025 02:26:14 INFO  [Epoch 66] Val Results: OrderedDict([('ndcg@5', 0.03927743434906006), ('ndcg@10', 0.04942658171057701), ('ndcg@20', 0.06028743460774422), ('ndcg@50', 0.07423218339681625), ('recall@5', 0.059562671929597855), ('recall@10', 0.0910879597067833), ('recall@20', 0.13428430259227753), ('recall@50', 0.20493672788143158), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00018781021935865283)])
+Sat 18 Oct 2025 02:26:14 INFO  [Epoch 66] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:26:51 INFO  [Epoch 67] Train Loss: 2.4618837763827135
+Sat 18 Oct 2025 02:27:29 INFO  [Epoch 68] Train Loss: 2.4580565644609327
+Sat 18 Oct 2025 02:29:57 INFO  [Epoch 68] Val Results: OrderedDict([('ndcg@5', 0.03798789903521538), ('ndcg@10', 0.04813409224152565), ('ndcg@20', 0.05954955890774727), ('ndcg@50', 0.07307428121566772), ('recall@5', 0.05835532024502754), ('recall@10', 0.08992532640695572), ('recall@20', 0.13535751402378082), ('recall@50', 0.20350578427314758), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000602781365159899)])
+Sat 18 Oct 2025 02:30:34 INFO  [Epoch 69] Train Loss: 2.4523676703412245
+Sat 18 Oct 2025 02:31:12 INFO  [Epoch 70] Train Loss: 2.4477537958538487
+Sat 18 Oct 2025 02:33:40 INFO  [Epoch 70] Val Results: OrderedDict([('ndcg@5', 0.038573816418647766), ('ndcg@10', 0.04884450510144234), ('ndcg@20', 0.059595633298158646), ('ndcg@50', 0.07425857335329056), ('recall@5', 0.05987568572163582), ('recall@10', 0.0918034240603447), ('recall@20', 0.13464204967021942), ('recall@50', 0.208782359957695), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0012896301923319697)])
+Sat 18 Oct 2025 02:34:17 INFO  [Epoch 71] Train Loss: 2.43978712067066
+Sat 18 Oct 2025 02:34:54 INFO  [Epoch 72] Train Loss: 2.43523923988936
+Sat 18 Oct 2025 02:37:23 INFO  [Epoch 72] Val Results: OrderedDict([('ndcg@5', 0.04072071984410286), ('ndcg@10', 0.05105788633227348), ('ndcg@20', 0.06160425767302513), ('ndcg@50', 0.07574982196092606), ('recall@5', 0.0626034066081047), ('recall@10', 0.09484416246414185), ('recall@20', 0.13696731626987457), ('recall@50', 0.208648219704628), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00023431562294717878)])
+Sat 18 Oct 2025 02:37:23 INFO  [Epoch 72] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:38:00 INFO  [Epoch 73] Train Loss: 2.4293530836179564
+Sat 18 Oct 2025 02:38:38 INFO  [Epoch 74] Train Loss: 2.424180023401164
+Sat 18 Oct 2025 02:41:06 INFO  [Epoch 74] Val Results: OrderedDict([('ndcg@5', 0.04047805815935135), ('ndcg@10', 0.0510445237159729), ('ndcg@20', 0.06178941950201988), ('ndcg@50', 0.07619832456111908), ('recall@5', 0.06184322386980057), ('recall@10', 0.09471001476049423), ('recall@20', 0.13728033006191254), ('recall@50', 0.20998971164226532), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000775387859903276)])
+Sat 18 Oct 2025 02:41:43 INFO  [Epoch 75] Train Loss: 2.4180308710276384
+Sat 18 Oct 2025 02:42:21 INFO  [Epoch 76] Train Loss: 2.4140015608605707
+Sat 18 Oct 2025 02:44:49 INFO  [Epoch 76] Val Results: OrderedDict([('ndcg@5', 0.041445162147283554), ('ndcg@10', 0.05178458243608475), ('ndcg@20', 0.06244373694062233), ('ndcg@50', 0.07736773043870926), ('recall@5', 0.06287170946598053), ('recall@10', 0.09497831016778946), ('recall@20', 0.137369766831398), ('recall@50', 0.2125832885503769), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0007512408774346113)])
+Sat 18 Oct 2025 02:44:49 INFO  [Epoch 76] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:45:26 INFO  [Epoch 77] Train Loss: 2.4093247879340027
+Sat 18 Oct 2025 02:46:04 INFO  [Epoch 78] Train Loss: 2.4031766008310282
+Sat 18 Oct 2025 02:48:32 INFO  [Epoch 78] Val Results: OrderedDict([('ndcg@5', 0.04143831506371498), ('ndcg@10', 0.051452960819005966), ('ndcg@20', 0.06191372126340866), ('ndcg@50', 0.07695647329092026), ('recall@5', 0.0626034066081047), ('recall@10', 0.09368152916431427), ('recall@20', 0.13504450023174286), ('recall@50', 0.21070517599582672), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005902606644667685)])
+Sat 18 Oct 2025 02:49:09 INFO  [Epoch 79] Train Loss: 2.397653721649823
+Sat 18 Oct 2025 02:49:46 INFO  [Epoch 80] Train Loss: 2.3942580742594797
+Sat 18 Oct 2025 02:52:15 INFO  [Epoch 80] Val Results: OrderedDict([('ndcg@5', 0.04186907038092613), ('ndcg@10', 0.05243127793073654), ('ndcg@20', 0.0626717284321785), ('ndcg@50', 0.07757104188203812), ('recall@5', 0.06278227269649506), ('recall@10', 0.09555962681770325), ('recall@20', 0.13643071055412292), ('recall@50', 0.21137593686580658), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.006708402652293444)])
+Sat 18 Oct 2025 02:52:15 INFO  [Epoch 80] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:52:52 INFO  [Epoch 81] Train Loss: 2.3873066424395786
+Sat 18 Oct 2025 02:53:29 INFO  [Epoch 82] Train Loss: 2.3847471897704127
+Sat 18 Oct 2025 02:55:58 INFO  [Epoch 82] Val Results: OrderedDict([('ndcg@5', 0.04305627942085266), ('ndcg@10', 0.05328192934393883), ('ndcg@20', 0.06375754624605179), ('ndcg@50', 0.07860793173313141), ('recall@5', 0.06479452550411224), ('recall@10', 0.09658811241388321), ('recall@20', 0.13826408982276917), ('recall@50', 0.21316459774971008), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00047668025945313275)])
+Sat 18 Oct 2025 02:55:58 INFO  [Epoch 82] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 02:56:35 INFO  [Epoch 83] Train Loss: 2.3774903126727747
+Sat 18 Oct 2025 02:57:12 INFO  [Epoch 84] Train Loss: 2.3715216236819554
+Sat 18 Oct 2025 02:59:41 INFO  [Epoch 84] Val Results: OrderedDict([('ndcg@5', 0.04309368506073952), ('ndcg@10', 0.05386912822723389), ('ndcg@20', 0.06457499414682388), ('ndcg@50', 0.0791960135102272), ('recall@5', 0.06381075829267502), ('recall@10', 0.09725886583328247), ('recall@20', 0.13987389206886292), ('recall@50', 0.213656485080719), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00035952238249592483)])
+Sat 18 Oct 2025 02:59:41 INFO  [Epoch 84] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 03:00:18 INFO  [Epoch 85] Train Loss: 2.365552873926868
+Sat 18 Oct 2025 03:00:55 INFO  [Epoch 86] Train Loss: 2.3626292827992126
+Sat 18 Oct 2025 03:03:23 INFO  [Epoch 86] Val Results: OrderedDict([('ndcg@5', 0.04392910376191139), ('ndcg@10', 0.054522354155778885), ('ndcg@20', 0.06554891914129257), ('ndcg@50', 0.07998603582382202), ('recall@5', 0.06609131395816803), ('recall@10', 0.09900281578302383), ('recall@20', 0.14278048276901245), ('recall@50', 0.21571345627307892), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005097705288790166)])
+Sat 18 Oct 2025 03:03:23 INFO  [Epoch 86] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 03:04:00 INFO  [Epoch 87] Train Loss: 2.35705899264562
+Sat 18 Oct 2025 03:04:38 INFO  [Epoch 88] Train Loss: 2.352041248217631
+Sat 18 Oct 2025 03:07:06 INFO  [Epoch 88] Val Results: OrderedDict([('ndcg@5', 0.04252636432647705), ('ndcg@10', 0.05259416997432709), ('ndcg@20', 0.0633755549788475), ('ndcg@50', 0.07833158224821091), ('recall@5', 0.06381075829267502), ('recall@10', 0.09506774693727493), ('recall@20', 0.13790635764598846), ('recall@50', 0.2134329080581665), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0008558779954910278)])
+Sat 18 Oct 2025 03:07:43 INFO  [Epoch 89] Train Loss: 2.3469931963352844
+Sat 18 Oct 2025 03:08:21 INFO  [Epoch 90] Train Loss: 2.3419623226507165
+Sat 18 Oct 2025 03:10:49 INFO  [Epoch 90] Val Results: OrderedDict([('ndcg@5', 0.04277579486370087), ('ndcg@10', 0.05299307405948639), ('ndcg@20', 0.0633837953209877), ('ndcg@50', 0.0773974359035492), ('recall@5', 0.06483924388885498), ('recall@10', 0.09667754918336868), ('recall@20', 0.13799579441547394), ('recall@50', 0.20846934616565704), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.008400483056902885)])
+Sat 18 Oct 2025 03:11:26 INFO  [Epoch 91] Train Loss: 2.3362312618396626
+Sat 18 Oct 2025 03:12:04 INFO  [Epoch 92] Train Loss: 2.3324339134683867
+Sat 18 Oct 2025 03:14:32 INFO  [Epoch 92] Val Results: OrderedDict([('ndcg@5', 0.043723154813051224), ('ndcg@10', 0.054477594792842865), ('ndcg@20', 0.06469213217496872), ('ndcg@50', 0.07908490300178528), ('recall@5', 0.06595715880393982), ('recall@10', 0.09936054795980453), ('recall@20', 0.1399633288383484), ('recall@50', 0.2125832885503769), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0004310691438149661)])
+Sat 18 Oct 2025 03:15:09 INFO  [Epoch 93] Train Loss: 2.326092682459939
+Sat 18 Oct 2025 03:15:46 INFO  [Epoch 94] Train Loss: 2.322118002616942
+Sat 18 Oct 2025 03:18:14 INFO  [Epoch 94] Val Results: OrderedDict([('ndcg@5', 0.04333541542291641), ('ndcg@10', 0.053612422198057175), ('ndcg@20', 0.06453728675842285), ('ndcg@50', 0.0784827247262001), ('recall@5', 0.06609131395816803), ('recall@10', 0.09815319627523422), ('recall@20', 0.14157313108444214), ('recall@50', 0.21191252768039703), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0006752223707735538)])
+Sat 18 Oct 2025 03:18:52 INFO  [Epoch 95] Train Loss: 2.3158257694095954
+Sat 18 Oct 2025 03:19:29 INFO  [Epoch 96] Train Loss: 2.3116892372123927
+Sat 18 Oct 2025 03:21:57 INFO  [Epoch 96] Val Results: OrderedDict([('ndcg@5', 0.04217987507581711), ('ndcg@10', 0.053610678762197495), ('ndcg@20', 0.06444235891103745), ('ndcg@50', 0.07832398265600204), ('recall@5', 0.0631847232580185), ('recall@10', 0.09864508360624313), ('recall@20', 0.14170728623867035), ('recall@50', 0.21159951388835907), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.003914501518011093)])
+Sat 18 Oct 2025 03:22:34 INFO  [Epoch 97] Train Loss: 2.307667391773328
+Sat 18 Oct 2025 03:23:12 INFO  [Epoch 98] Train Loss: 2.302075295596735
+Sat 18 Oct 2025 03:25:40 INFO  [Epoch 98] Val Results: OrderedDict([('ndcg@5', 0.04464910924434662), ('ndcg@10', 0.05468093231320381), ('ndcg@20', 0.06559449434280396), ('ndcg@50', 0.08032814413309097), ('recall@5', 0.06792470067739487), ('recall@10', 0.0993158370256424), ('recall@20', 0.14273576438426971), ('recall@50', 0.2172338217496872), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.002396815922111273)])
+Sat 18 Oct 2025 03:25:40 INFO  [Epoch 98] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 03:26:17 INFO  [Epoch 99] Train Loss: 2.29851544506355
+Sat 18 Oct 2025 03:26:55 INFO  [Epoch 100] Train Loss: 2.2931963924304055
+Sat 18 Oct 2025 03:29:23 INFO  [Epoch 100] Val Results: OrderedDict([('ndcg@5', 0.04451547935605049), ('ndcg@10', 0.0549393966794014), ('ndcg@20', 0.06602441519498825), ('ndcg@50', 0.08053211867809296), ('recall@5', 0.06698564440011978), ('recall@10', 0.09940526634454727), ('recall@20', 0.14340652525424957), ('recall@50', 0.21633948385715485), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000860349740833044)])
+Sat 18 Oct 2025 03:29:23 INFO  [Epoch 100] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 03:30:00 INFO  [Epoch 101] Train Loss: 2.2873940690482173
+Sat 18 Oct 2025 03:30:37 INFO  [Epoch 102] Train Loss: 2.2836203375679047
+Sat 18 Oct 2025 03:33:06 INFO  [Epoch 102] Val Results: OrderedDict([('ndcg@5', 0.044019050896167755), ('ndcg@10', 0.05477214232087135), ('ndcg@20', 0.06596151739358902), ('ndcg@50', 0.08017327636480331), ('recall@5', 0.0658230111002922), ('recall@10', 0.09922640025615692), ('recall@20', 0.1436748206615448), ('recall@50', 0.21531100571155548), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005491212941706181)])
+Sat 18 Oct 2025 03:33:43 INFO  [Epoch 103] Train Loss: 2.2781864636603033
+Sat 18 Oct 2025 03:34:20 INFO  [Epoch 104] Train Loss: 2.2737405949529506
+Sat 18 Oct 2025 03:36:48 INFO  [Epoch 104] Val Results: OrderedDict([('ndcg@5', 0.04565427079796791), ('ndcg@10', 0.05631384253501892), ('ndcg@20', 0.06680891662836075), ('ndcg@50', 0.08121126890182495), ('recall@5', 0.06814827769994736), ('recall@10', 0.10141751915216446), ('recall@20', 0.14313821494579315), ('recall@50', 0.21566873788833618), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00571032427251339)])
+Sat 18 Oct 2025 03:36:48 INFO  [Epoch 104] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 03:37:25 INFO  [Epoch 105] Train Loss: 2.2687765216085234
+Sat 18 Oct 2025 03:38:03 INFO  [Epoch 106] Train Loss: 2.262969792584965
+Sat 18 Oct 2025 03:40:31 INFO  [Epoch 106] Val Results: OrderedDict([('ndcg@5', 0.04619262367486954), ('ndcg@10', 0.05713696405291557), ('ndcg@20', 0.06792380660772324), ('ndcg@50', 0.08229408413171768), ('recall@5', 0.06917676329612732), ('recall@10', 0.10320618748664856), ('recall@20', 0.1460448056459427), ('recall@50', 0.2186647653579712), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.001718016341328621)])
+Sat 18 Oct 2025 03:40:31 INFO  [Epoch 106] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 03:41:08 INFO  [Epoch 107] Train Loss: 2.2589163200400684
+Sat 18 Oct 2025 03:41:45 INFO  [Epoch 108] Train Loss: 2.2542569674406536
+Sat 18 Oct 2025 03:44:13 INFO  [Epoch 108] Val Results: OrderedDict([('ndcg@5', 0.045067477971315384), ('ndcg@10', 0.055452149361371994), ('ndcg@20', 0.06606077402830124), ('ndcg@50', 0.08088139444589615), ('recall@5', 0.06864016503095627), ('recall@10', 0.10097035020589828), ('recall@20', 0.14291463792324066), ('recall@50', 0.21754683554172516), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.003230335656553507)])
+Sat 18 Oct 2025 03:44:50 INFO  [Epoch 109] Train Loss: 2.249209635916387
+Sat 18 Oct 2025 03:45:27 INFO  [Epoch 110] Train Loss: 2.2450065928210545
+Sat 18 Oct 2025 03:47:55 INFO  [Epoch 110] Val Results: OrderedDict([('ndcg@5', 0.04412055388092995), ('ndcg@10', 0.05523734912276268), ('ndcg@20', 0.06615880876779556), ('ndcg@50', 0.0795862227678299), ('recall@5', 0.06707508116960526), ('recall@10', 0.10173054039478302), ('recall@20', 0.1451057493686676), ('recall@50', 0.21240441501140594), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.016723157837986946)])
+Sat 18 Oct 2025 03:48:32 INFO  [Epoch 111] Train Loss: 2.240355634967641
+Sat 18 Oct 2025 03:49:10 INFO  [Epoch 112] Train Loss: 2.235905128230381
+Sat 18 Oct 2025 03:51:38 INFO  [Epoch 112] Val Results: OrderedDict([('ndcg@5', 0.04589838162064552), ('ndcg@10', 0.05618298426270485), ('ndcg@20', 0.06738033145666122), ('ndcg@50', 0.08157893270254135), ('recall@5', 0.0685507282614708), ('recall@10', 0.10065733641386032), ('recall@20', 0.1451057493686676), ('recall@50', 0.21656307578086853), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0011501139961183071)])
+Sat 18 Oct 2025 03:52:15 INFO  [Epoch 113] Train Loss: 2.23057934885359
+Sat 18 Oct 2025 03:52:53 INFO  [Epoch 114] Train Loss: 2.226241583026337
+Sat 18 Oct 2025 03:55:20 INFO  [Epoch 114] Val Results: OrderedDict([('ndcg@5', 0.04307129979133606), ('ndcg@10', 0.05331585183739662), ('ndcg@20', 0.06460186839103699), ('ndcg@50', 0.07814665883779526), ('recall@5', 0.06577829271554947), ('recall@10', 0.09761659801006317), ('recall@20', 0.14233331382274628), ('recall@50', 0.210213303565979), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 6.483924516942352e-05), ('err@50', 0.05830255150794983)])
+Sat 18 Oct 2025 03:55:57 INFO  [Epoch 115] Train Loss: 2.2226463412496367
+Sat 18 Oct 2025 03:56:35 INFO  [Epoch 116] Train Loss: 2.2164819055030316
+Sat 18 Oct 2025 03:59:03 INFO  [Epoch 116] Val Results: OrderedDict([('ndcg@5', 0.04435679689049721), ('ndcg@10', 0.0551241934299469), ('ndcg@20', 0.06648429483175278), ('ndcg@50', 0.08095011115074158), ('recall@5', 0.06568886339664459), ('recall@10', 0.09909225255250931), ('recall@20', 0.14412198960781097), ('recall@50', 0.21714438498020172), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.004263292066752911)])
+Sat 18 Oct 2025 03:59:40 INFO  [Epoch 117] Train Loss: 2.2124083621956494
+Sat 18 Oct 2025 04:00:17 INFO  [Epoch 118] Train Loss: 2.207198972368055
+Sat 18 Oct 2025 04:02:46 INFO  [Epoch 118] Val Results: OrderedDict([('ndcg@5', 0.047253869473934174), ('ndcg@10', 0.05836750194430351), ('ndcg@20', 0.06904491782188416), ('ndcg@50', 0.08331534266471863), ('recall@5', 0.0699816644191742), ('recall@10', 0.10445825755596161), ('recall@20', 0.14698386192321777), ('recall@50', 0.21897777915000916), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0007986406562849879)])
+Sat 18 Oct 2025 04:02:46 INFO  [Epoch 118] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 04:03:23 INFO  [Epoch 119] Train Loss: 2.202720843400473
+Sat 18 Oct 2025 04:04:00 INFO  [Epoch 120] Train Loss: 2.197958907728529
+Sat 18 Oct 2025 04:06:28 INFO  [Epoch 120] Val Results: OrderedDict([('ndcg@5', 0.04672093689441681), ('ndcg@10', 0.05783471837639809), ('ndcg@20', 0.06871185451745987), ('ndcg@50', 0.08225253224372864), ('recall@5', 0.06931091845035553), ('recall@10', 0.10374278575181961), ('recall@20', 0.14684970676898956), ('recall@50', 0.21504271030426025), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0027187764644622803)])
+Sat 18 Oct 2025 04:07:05 INFO  [Epoch 121] Train Loss: 2.19419428253916
+Sat 18 Oct 2025 04:07:43 INFO  [Epoch 122] Train Loss: 2.1893270442457977
+Sat 18 Oct 2025 04:10:11 INFO  [Epoch 122] Val Results: OrderedDict([('ndcg@5', 0.0475686676800251), ('ndcg@10', 0.05865645408630371), ('ndcg@20', 0.0691177174448967), ('ndcg@50', 0.08308909088373184), ('recall@5', 0.07114429771900177), ('recall@10', 0.10566560924053192), ('recall@20', 0.14729687571525574), ('recall@50', 0.21812815964221954), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.001057997578755021)])
+Sat 18 Oct 2025 04:10:11 INFO  [Epoch 122] Saved model checkpoint to ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 04:10:48 INFO  [Epoch 123] Train Loss: 2.183696939787512
+Sat 18 Oct 2025 04:11:25 INFO  [Epoch 124] Train Loss: 2.178590370059477
+Sat 18 Oct 2025 04:13:53 INFO  [Epoch 124] Val Results: OrderedDict([('ndcg@5', 0.04664319008588791), ('ndcg@10', 0.057174332439899445), ('ndcg@20', 0.06813053786754608), ('ndcg@50', 0.08207540959119797), ('recall@5', 0.06922148168087006), ('recall@10', 0.10199883580207825), ('recall@20', 0.14550819993019104), ('recall@50', 0.21589231491088867), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0007601841352880001)])
+Sat 18 Oct 2025 04:14:31 INFO  [Epoch 125] Train Loss: 2.174993973761681
+Sat 18 Oct 2025 04:15:08 INFO  [Epoch 126] Train Loss: 2.1681821170020195
+Sat 18 Oct 2025 04:17:36 INFO  [Epoch 126] Val Results: OrderedDict([('ndcg@5', 0.04738031327724457), ('ndcg@10', 0.057953014969825745), ('ndcg@20', 0.06860179454088211), ('ndcg@50', 0.08261846750974655), ('recall@5', 0.0699816644191742), ('recall@10', 0.10280373692512512), ('recall@20', 0.14506103098392487), ('recall@50', 0.2158028930425644), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005535929813049734)])
+Sat 18 Oct 2025 04:18:14 INFO  [Epoch 127] Train Loss: 2.166987232660969
+Sat 18 Oct 2025 04:18:51 INFO  [Epoch 128] Train Loss: 2.160949073876852
+Sat 18 Oct 2025 04:21:19 INFO  [Epoch 128] Val Results: OrderedDict([('ndcg@5', 0.04661181569099426), ('ndcg@10', 0.05802283063530922), ('ndcg@20', 0.06816969811916351), ('ndcg@50', 0.08272228389978409), ('recall@5', 0.07024996727705002), ('recall@10', 0.10571032762527466), ('recall@20', 0.14591065049171448), ('recall@50', 0.2193802297115326), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.000485623546410352)])
+Sat 18 Oct 2025 04:21:56 INFO  [Epoch 129] Train Loss: 2.156507980034973
+Sat 18 Oct 2025 04:22:33 INFO  [Epoch 130] Train Loss: 2.1517647217219906
+Sat 18 Oct 2025 04:25:02 INFO  [Epoch 130] Val Results: OrderedDict([('ndcg@5', 0.048046667128801346), ('ndcg@10', 0.05853578448295593), ('ndcg@20', 0.0691850334405899), ('ndcg@50', 0.08316220343112946), ('recall@5', 0.0710548684000969), ('recall@10', 0.10365335643291473), ('recall@20', 0.14591065049171448), ('recall@50', 0.2165183573961258), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0004668425244744867)])
+Sat 18 Oct 2025 04:25:39 INFO  [Epoch 131] Train Loss: 2.145598942435669
+Sat 18 Oct 2025 04:26:16 INFO  [Epoch 132] Train Loss: 2.1417230293444622
+Sat 18 Oct 2025 04:28:44 INFO  [Epoch 132] Val Results: OrderedDict([('ndcg@5', 0.04769795760512352), ('ndcg@10', 0.05849524959921837), ('ndcg@20', 0.06897251307964325), ('ndcg@50', 0.08357227593660355), ('recall@5', 0.07123373448848724), ('recall@10', 0.10472656041383743), ('recall@20', 0.14635781943798065), ('recall@50', 0.21991682052612305), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00043375216773711145)])
+Sat 18 Oct 2025 04:29:21 INFO  [Epoch 133] Train Loss: 2.136426787432066
+Sat 18 Oct 2025 04:29:58 INFO  [Epoch 134] Train Loss: 2.131966647702896
+Sat 18 Oct 2025 04:32:27 INFO  [Epoch 134] Val Results: OrderedDict([('ndcg@5', 0.046389389783144), ('ndcg@10', 0.056992169469594955), ('ndcg@20', 0.06817123293876648), ('ndcg@50', 0.08223038911819458), ('recall@5', 0.06913204491138458), ('recall@10', 0.1021777018904686), ('recall@20', 0.14658141136169434), ('recall@50', 0.21750211715698242), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005008272710256279)])
+Sat 18 Oct 2025 04:33:04 INFO  [Epoch 135] Train Loss: 2.128361850629057
+Sat 18 Oct 2025 04:33:41 INFO  [Epoch 136] Train Loss: 2.122733575360784
+Sat 18 Oct 2025 04:36:10 INFO  [Epoch 136] Val Results: OrderedDict([('ndcg@5', 0.04753532633185387), ('ndcg@10', 0.05852004140615463), ('ndcg@20', 0.06929650157690048), ('ndcg@50', 0.08327668905258179), ('recall@5', 0.0703393965959549), ('recall@10', 0.10445825755596161), ('recall@20', 0.14729687571525574), ('recall@50', 0.21790456771850586), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0006242453819140792)])
+Sat 18 Oct 2025 04:36:47 INFO  [Epoch 137] Train Loss: 2.119502891362409
+Sat 18 Oct 2025 04:37:24 INFO  [Epoch 138] Train Loss: 2.113921078494551
+Sat 18 Oct 2025 04:39:52 INFO  [Epoch 138] Val Results: OrderedDict([('ndcg@5', 0.047711331397295), ('ndcg@10', 0.058607298880815506), ('ndcg@20', 0.06909935921430588), ('ndcg@50', 0.08248799294233322), ('recall@5', 0.07065241783857346), ('recall@10', 0.10450297594070435), ('recall@20', 0.14608952403068542), ('recall@50', 0.21347762644290924), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.00252917711623013)])
+Sat 18 Oct 2025 04:40:30 INFO  [Epoch 139] Train Loss: 2.10875369695374
+Sat 18 Oct 2025 04:41:07 INFO  [Epoch 140] Train Loss: 2.1049543180818224
+Sat 18 Oct 2025 04:43:36 INFO  [Epoch 140] Val Results: OrderedDict([('ndcg@5', 0.04708591848611832), ('ndcg@10', 0.05818942189216614), ('ndcg@20', 0.06854654848575592), ('ndcg@50', 0.08284713327884674), ('recall@5', 0.0701158195734024), ('recall@10', 0.10463712364435196), ('recall@20', 0.1458212286233902), ('recall@50', 0.21803872287273407), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0014756517484784126)])
+Sat 18 Oct 2025 04:44:13 INFO  [Epoch 141] Train Loss: 2.1007632193398385
+Sat 18 Oct 2025 04:44:50 INFO  [Epoch 142] Train Loss: 2.095226134075729
+Sat 18 Oct 2025 04:47:18 INFO  [Epoch 142] Val Results: OrderedDict([('ndcg@5', 0.04793820157647133), ('ndcg@10', 0.05843646451830864), ('ndcg@20', 0.06938830018043518), ('ndcg@50', 0.0831453874707222), ('recall@5', 0.07096543163061142), ('recall@10', 0.10351920872926712), ('recall@20', 0.14707328379154205), ('recall@50', 0.21656307578086853), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0003917184367310256)])
+Sat 18 Oct 2025 04:47:56 INFO  [Epoch 143] Train Loss: 2.0911254901366476
+Sat 18 Oct 2025 04:48:33 INFO  [Epoch 144] Train Loss: 2.0867789517580766
+Sat 18 Oct 2025 04:51:01 INFO  [Epoch 144] Val Results: OrderedDict([('ndcg@5', 0.04866334795951843), ('ndcg@10', 0.05865582451224327), ('ndcg@20', 0.06970301270484924), ('ndcg@50', 0.08385720103979111), ('recall@5', 0.07194919884204865), ('recall@10', 0.10302732139825821), ('recall@20', 0.1468944251537323), ('recall@50', 0.2183070182800293), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0004122881800867617)])
+Sat 18 Oct 2025 04:51:39 INFO  [Epoch 145] Train Loss: 2.0824459262395183
+Sat 18 Oct 2025 04:52:16 INFO  [Epoch 146] Train Loss: 2.0787868386112764
+Sat 18 Oct 2025 04:54:44 INFO  [Epoch 146] Val Results: OrderedDict([('ndcg@5', 0.047630779445171356), ('ndcg@10', 0.05860293284058571), ('ndcg@20', 0.06911022961139679), ('ndcg@50', 0.08298937976360321), ('recall@5', 0.07038411498069763), ('recall@10', 0.10454768687486649), ('recall@20', 0.14635781943798065), ('recall@50', 0.2165183573961258), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005249742534942925)])
+Sat 18 Oct 2025 04:55:21 INFO  [Epoch 147] Train Loss: 2.0741599997657745
+Sat 18 Oct 2025 04:55:58 INFO  [Epoch 148] Train Loss: 2.06964124686987
+Sat 18 Oct 2025 04:58:27 INFO  [Epoch 148] Val Results: OrderedDict([('ndcg@5', 0.04736769571900368), ('ndcg@10', 0.05797956511378288), ('ndcg@20', 0.06845565885305405), ('ndcg@50', 0.08310650289058685), ('recall@5', 0.07020524889230728), ('recall@10', 0.10307203978300095), ('recall@20', 0.14470329880714417), ('recall@50', 0.21857532858848572), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0003899298026226461)])
+Sat 18 Oct 2025 04:59:04 INFO  [Epoch 149] Train Loss: 2.0648630068923715
+Sat 18 Oct 2025 04:59:41 INFO  [Epoch 150] Train Loss: 2.0604922734345905
+Sat 18 Oct 2025 05:02:09 INFO  [Epoch 150] Val Results: OrderedDict([('ndcg@5', 0.04733267053961754), ('ndcg@10', 0.05770380049943924), ('ndcg@20', 0.0688057467341423), ('ndcg@50', 0.08278153836727142), ('recall@5', 0.07065241783857346), ('recall@10', 0.10298260301351547), ('recall@20', 0.1471180021762848), ('recall@50', 0.2175915539264679), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0006197736947797239)])
+Sat 18 Oct 2025 05:02:47 INFO  [Epoch 151] Train Loss: 2.056425782725041
+Sat 18 Oct 2025 05:03:24 INFO  [Epoch 152] Train Loss: 2.052745106619156
+Sat 18 Oct 2025 05:05:53 INFO  [Epoch 152] Val Results: OrderedDict([('ndcg@5', 0.04819304123520851), ('ndcg@10', 0.05839741975069046), ('ndcg@20', 0.069313183426857), ('ndcg@50', 0.0829465463757515), ('recall@5', 0.0710548684000969), ('recall@10', 0.10280373692512512), ('recall@20', 0.14600008726119995), ('recall@50', 0.21468497812747955), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0005267629167065024)])
+Sat 18 Oct 2025 05:05:53 INFO  Early stopping at epoch 152
+Sat 18 Oct 2025 05:05:53 INFO  Best epoch: 122, Best val score: 0.05865645408630371
+Sat 18 Oct 2025 05:05:53 INFO  Loaded best model checkpoint from ckpt/genrec_default-main.py_--rand_seed=2027_--weight_decay=0.15_--lr=0.001_--n_hash_buckets=64-Oct-18-2025_00-23-21-306b56-.pth
+Sat 18 Oct 2025 05:16:18 INFO  Test Results: OrderedDict([('ndcg@5', 0.034473855048418045), ('ndcg@10', 0.043442852795124054), ('ndcg@20', 0.052857667207717896), ('ndcg@50', 0.06576985865831375), ('recall@5', 0.05263157933950424), ('recall@10', 0.08057952672243118), ('recall@20', 0.11787327378988266), ('recall@50', 0.1833832710981369), ('err@5', 0.0), ('err@10', 0.0), ('err@20', 0.0), ('err@50', 0.0)])

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="bech-p1" remoteFilesAllowedToDisappearOnAutoupload="false" compareModeInSync="SIZE">
+    <serverData>
+      <paths name="Actionpiece-4090">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/shared-nvme/action_piece" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="TIGER-3090">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/shared-nvme/action_piece" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="bech-p1">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/gemini/code/action_piece" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

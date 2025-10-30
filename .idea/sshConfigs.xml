@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="36.103.203.216" id="583441d9-3e70-4da2-b1da-aaa313e7f53d" port="30229" customName="ACtionpiece-4090" nameFormat="CUSTOM" username="root" useOpenSSHConfig="true">
+        <option name="customName" value="ACtionpiece-4090" />
+      </sshConfig>
+      <sshConfig authType="PASSWORD" host="console-region1.behcyun.com" id="c98d5a31-0692-4f1a-89a2-081c7fa3ff6e" port="30022" customName="BECH-P1" nameFormat="CUSTOM" username="mengma@root@ssh-678a1491514b7f1006d605e9161946b1.ugyxuhyub9zu" useOpenSSHConfig="true">
+        <option name="customName" value="BECH-P1" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

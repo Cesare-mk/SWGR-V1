@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="72a1073a-0a2b-4c3f-bcd1-9c958d5c2b82" name="Actionpiece-4090">
+        <fileTransfer accessType="SFTP" host="36.103.203.216" port="30229" sshConfigId="583441d9-3e70-4da2-b1da-aaa313e7f53d" sshConfig="ACtionpiece-4090">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="07962a29-facb-494d-a0c1-37168378c8af" name="bech-p1">
+        <fileTransfer accessType="SFTP" host="console-region1.behcyun.com" port="30022" sshConfigId="c98d5a31-0692-4f1a-89a2-081c7fa3ff6e" sshConfig="BECH-P1">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
